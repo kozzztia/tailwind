@@ -13,6 +13,7 @@
   /* var */
   --primary-y: .5rem;
   --primary-x: .8rem;
+  --gap: 1rem;
   @media screen and (max-width: 992px) {
     &{
       --primary-y: .5rem;
