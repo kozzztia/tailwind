@@ -8,8 +8,8 @@ export const list = [
     },
     {
         id: 2,
-        name: 'Profile Card',
-        component: lazy(() => import('../components/ProfileCard/ProfileCard')),
+        name: 'Add To Bag challenge',
+        component: lazy(() => import('../components//AddToBagChallenge/AddToBagChallenge')),
     },
     {
         id: 3,
