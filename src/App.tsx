@@ -9,7 +9,8 @@ function App() {
   return (
     <div className="app">
       <Header/>
-      <Suspense fallback={<div className="w-full h-full flex justify-center items-center">Loading...</div>}>
+      <Suspense 
+        fallback={<div className="w-full h-full flex justify-center items-center font-bold">Loading . . .</div>}>
                 {list.map((item) => {
                         
                     const Component = item.component;
