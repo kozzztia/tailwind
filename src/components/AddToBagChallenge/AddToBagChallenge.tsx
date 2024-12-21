@@ -24,7 +24,7 @@ const AddToBagChallenge = () => {
 
   }
   return (
-    <div className="w-full max-w-[780px] h-auto flex flex-wrap flex-row justify-center bg-white overflow-hidden p-[12px] text-black gap-[0] md:gap-[15px]
+    <div className="w-full max-w-[780px] h-auto flex flex-wrap flex-row justify-center bg-white overflow-hidden p-[12px] text-black gap-[0] md:gap-[15px] 
     
     ">
       <Menu handler={menuClick} imageNumber={imageNumber} />
@@ -60,7 +60,7 @@ const Menu = ({ handler, imageNumber }: { handler: (id: number) => void, imageNu
 }
 const Figure = ({ image }: { image: number}) => {
   return (
-    <figure className="w-[300px] h-full p-[15px]">
+    <figure className="w-[230px] h-full">
       <img
         className="w-full h-full object-cover"
         src={buttons[image-1].image}
