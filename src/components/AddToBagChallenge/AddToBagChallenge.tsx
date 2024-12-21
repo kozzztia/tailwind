@@ -24,7 +24,9 @@ const AddToBagChallenge = () => {
 
   }
   return (
-    <div className="w-[780px] h-[410px] flex flex-row justify-between bg-white overflow-hidden p-[12px] text-black gap-[15px] ">
+    <div className="w-full max-w-[780px] h-auto flex flex-wrap flex-row justify-center bg-white overflow-hidden p-[12px] text-black gap-[0] md:gap-[15px]
+    
+    ">
       <Menu handler={menuClick} imageNumber={imageNumber} />
       <Figure image={imageNumber}/>
       <Article handler={sizeClick} submit={submit} size={size}/>
@@ -88,7 +90,7 @@ const Article = ({ handler,submit , size }: { handler: (id: number) => void, siz
                 key={item.id}
                 onClick={() => handler(item.id)}
                 className={`w-9 h-9 bg-white text-black text-[11px] hover:bg-black hover:text-white rounded-sm transition-colors duration-300
-                  ${item.id === size ? "bg-black text-white" : "bg-white text-black"}
+                  ${item.id === size ? "bg-[black] text-white" : "bg-white text-black"}
                 `}>
                 {item.name}
               </button>
