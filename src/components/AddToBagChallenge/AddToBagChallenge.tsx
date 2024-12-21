@@ -43,7 +43,7 @@ const Menu = ({ handler, imageNumber }: { handler: (id: number) => void, imageNu
           <button
             key={item.id}
             className={`w-full h-[65px] rounded-sm flex justify-center items-center p-1
-              overflow-hidden border-[#ffdd99] border-2 transotion-colors duration-300 
+              overflow-hidden border-2 transotion-colors duration-300 
               contrast-100 opacity-75 hover:contrast-150 hover:opacity-100
               ${item.id === imageNumber ? "border-[#0080ff6b] contrast-150 opacity-100" : "border-transparent"} `}
             onClick={() => handler(item.id)}
