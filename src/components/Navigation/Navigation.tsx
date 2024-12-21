@@ -1,9 +1,13 @@
 import React from "react"
-import {navigation, NavType } from "./consts"
+import { navigation, NavType } from "./consts"
 
 const Navigation = () => {
-  const nav = navigation.slice(0, 5)
-  const help = navigation.slice(5)
+  const links = splitArray(navigation, 5)
+  const [isOpenId, setIsOpenId] = React.useState<number>(0)
+  const handler = (id: number) => {
+    console.log(id)
+    setIsOpenId(id)
+  }
   return (
     <div className="w-[280px] min-h-[570px] flex flex-col justify-start items-center rounded-[30px] overflow-hidden shadow-[0_0_40px_0] shadow-gray-400 bg-white px-3 py-7">
       <div className="w-full h-full flex justify-start items-center gap-x-3 pb-[20px]">
@@ -15,20 +19,17 @@ const Navigation = () => {
           <h4 className="w-full text-[12px] font-normal ">Environmantal meteorologist</h4>
         </span>
       </div>
-      <List>
       {
-        nav.map((item) => (
-              <Li key={item.id} item={item} />
+        links.map((item) => (
+          <List key={item.id} >
+            {
+              item.links.map((item) => (
+                <Li key={item.id} item={item} isOpen={isOpenId === item.id} setIsOpen={handler}/>
+              ))
+            }
+          </List>
         ))
       }
-    </List>
-    <List>
-      {
-        help.map((item) => (
-          <Li key={item.id} item={item} />
-        ))
-      }
-    </List>
     </div >
   )
 }
@@ -46,20 +47,37 @@ const List = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-const Li = ({item}: { item: NavType}) => {
+const Li = ({ item , isOpen, setIsOpen }: { item: NavType, isOpen: boolean, setIsOpen: (id: number) => void }) => {
   return (
-    <li key={item.id} className="w-full h-[30px] flex justify-start items-center px-[5px] capitalize relative">
-    <button className="w-full text-[12px] text-black font-bold
+    <li 
+    key={item.id} 
+    className={`w-full h-[30px] flex justify-start items-center px-[5px] capitalize relative 
+      transition duration-300 rounded-sm hover:bg-[#ccffe6] ${isOpen ? "bg-[#ccffe6]" : "bg-inherit"}`}>
+      <button 
+      onClick={() => setIsOpen(item.id)}
+      className={`w-full text-[12px] text-black font-bold
       flex justify-between items-center
       after:content-[''] after:w-[6px] after:h-[6px] after:block after:bg-inherit 
-      after:rotate-[-45deg] after:border-b-[2px] after:border-r-[2px] after:border-black
-      after:ml-auto 
-    ">
-      {React.createElement(item.icon, {
-        className: "w-6 h-6 text-black p-[5px] transition duration-300 bg-[#ccffe6] rounded-sm mr-3 "
-      })}
-      {item.name}
-    </button>
-  </li>
+      after:border-b-[2px] after:border-r-[2px] after:border-black after:m-[3px] after:transition-transform
+      after:duration-300 relative
+      after:ml-auto ${isOpen ? "after:rotate-45" : "after:-rotate-45"}`}>
+        {React.createElement(item.icon, {
+          className: "w-6 h-6 text-black p-[5px] transition duration-300 bg-[#ccffe6] rounded-sm mr-3 "
+        })}
+        {item.name}
+      </button>
+    </li>
   )
 }
+
+const splitArray = (array: NavType[], chunkSize: number) => {
+  return array.reduce((result, _, index) => {
+    if (index % chunkSize === 0) {
+      result.push({
+        id: result.length + 1,
+        links: array.slice(index, index + chunkSize),
+      });
+    }
+    return result;
+  }, [] as { id: number; links: NavType[] }[]);
+};
