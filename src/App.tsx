@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import './App.css'
 import Header from './components/Header/Header'
 import {list} from './constants/list'
+import CardContainer from './components/ui-kit/Container/CardContainer';
 
 function App() {
 
@@ -13,7 +14,10 @@ function App() {
                         
                     const Component = item.component;
                     return (
-                    <Component key={item.id} name={`${item.id}: ${item.name}`}/>
+                    <CardContainer color={item.color} name={item.name} key={item.id}>
+                          <Component />
+                    </CardContainer>
+
                     )
                 })}
       </Suspense>

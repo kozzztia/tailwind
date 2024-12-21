@@ -1,24 +1,9 @@
 import React from "react";
-import CardContainer from "../ui-kit/Container/CardContainer";
 import { buttons, links } from "./const";
 import Wave from "./decore/wave.svg";
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ name, className = "" }) => {
-  return (
-    <CardContainer className={`${className} bg-[#ffdd99]`} name={name}>
-      <Card />
-    </CardContainer>
-  );
-};
 
-export default ProfileCard;
-
-type ProfileCardProps = {
-  name: string;
-  className?: string;
-};
-
-const Card = () => {
+const ProfileCard = () => {
   return (
     <div className="w-[390px] h-[580px] flex flex-col bg-white  rounded-[50px] overflow-hidden drop-shadow">
       <div className="bg-inherit w-full h-[220px] flex justify-center items-start pt-10 relative">
@@ -90,3 +75,5 @@ const Card = () => {
     </div>
   );
 };
+
+export default ProfileCard;
