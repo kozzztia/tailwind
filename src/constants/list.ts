@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 
-export const list = [
+export const list: ListItem[] = [
     {
         id: 1,
         name: 'Profile Card',
@@ -15,9 +15,9 @@ export const list = [
     },
     {
         id: 3,
-        name: 'Profile Card',
-        component: lazy(() => import('../components/ProfileCard/ProfileCard')),
-        color: 'green'
+        name: 'Navigation',
+        component: lazy(() => import('../components/Navigation/Navigation')),
+        color: '#e6fff2'
     },
     {
         id: 4,
@@ -26,3 +26,11 @@ export const list = [
         color: 'red'
     }
 ]
+
+
+type ListItem = {
+    id: number;
+    name: string;
+    component: React.LazyExoticComponent<React.FC>;
+    color: string;
+  };
