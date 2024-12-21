@@ -44,8 +44,8 @@ const Menu = ({ handler, imageNumber }: { handler: (id: number) => void, imageNu
             key={item.id}
             className={`w-full h-[65px] rounded-sm flex justify-center items-center p-1
               overflow-hidden border-2 transotion-colors duration-300 
-              contrast-100 opacity-75 hover:contrast-150 hover:opacity-100
-              ${item.id === imageNumber ? "border-[#0080ff6b] contrast-150 opacity-100" : "border-transparent"} `}
+              contrast-100 hover:opacity-100
+              ${item.id === imageNumber ? "border-[#0080ff6b] opacity-100" : "border-transparent opacity-55"} `}
             onClick={() => handler(item.id)}
           >
             <img
@@ -78,7 +78,7 @@ const Article = ({ handler,submit , size }: { handler: (id: number) => void, siz
         Blue polo with a classic cut. Made of smooth and soft cotton.
       </p>
       <p className="text-grey-600 text-[29px] font-normal tracking-[.15px] mt-4 flex items-center">
-        $99.00 <span className="text-[#0080ff] text-[11px] font-thin bg-[#0080ff6b] rounded-sm h-[20px] w-[40px] flex justify-center items-center ml-[10px]" >-25%</span>
+        $99.00 <span className="text-[#0080ff] text-[11px] font-bold bg-[#0080ff6b] rounded-sm h-[20px] w-[40px] flex justify-center items-center ml-[10px]" >-25%</span>
       </p>
       <p className="text-[#868686] text-[11px] font-normal tracking-[.15px] line-through">$132.00</p>
       <div className="mt-4">
@@ -89,8 +89,8 @@ const Article = ({ handler,submit , size }: { handler: (id: number) => void, siz
               <button
                 key={item.id}
                 onClick={() => handler(item.id)}
-                className={`w-9 h-9 bg-white text-black text-[11px] hover:bg-black hover:text-white rounded-sm transition-colors duration-300
-                  ${item.id === size ? "bg-[black] text-white" : "bg-white text-black"}
+                className={`w-9 h-9 text-[11px] hover:bg-black hover:text-white rounded-sm transition-colors duration-300
+                  ${item.id === size ? " text-white bg-black" : "bg-white text-black"}
                 `}>
                 {item.name}
               </button>
