@@ -44,8 +44,8 @@ const Menu = ({ handler, imageNumber }: { handler: (id: number) => void, imageNu
             key={item.id}
             className={`w-full h-[65px] rounded-sm flex justify-center items-center p-1
               overflow-hidden border-2 transotion-colors duration-300 
-              contrast-100 opacity-75 hover:contrast-150 hover:opacity-100
-              ${item.id === imageNumber ? "border-[#0080ff6b] contrast-150 opacity-100" : "border-transparent"} `}
+              contrast-100 hover:opacity-100
+              ${item.id === imageNumber ? "border-[#0080ff6b] opacity-100" : "border-transparent opacity-55"} `}
             onClick={() => handler(item.id)}
           >
             <img
@@ -90,7 +90,7 @@ const Article = ({ handler,submit , size }: { handler: (id: number) => void, siz
                 key={item.id}
                 onClick={() => handler(item.id)}
                 className={`w-9 h-9 bg-white text-black text-[11px] hover:bg-black hover:text-white rounded-sm transition-colors duration-300
-                  ${item.id === size ? "bg-[black] text-white" : "bg-white text-black"}
+                  ${item.id === size ? "bg-black text-white" : "bg-white text-black"}
                 `}>
                 {item.name}
               </button>
