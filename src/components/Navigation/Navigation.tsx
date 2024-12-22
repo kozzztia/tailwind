@@ -10,6 +10,7 @@ const Navigation = () => {
     setIsOpenId(id)
   }
   const openHandler = () => {
+    setIsOpenId(0)
     setIsOpen(!isOpen)
   }
   return (
