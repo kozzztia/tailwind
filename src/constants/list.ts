@@ -21,9 +21,9 @@ export const list: ListItem[] = [
     },
     {
         id: 4,
-        name: 'Profile Card',
-        component: lazy(() => import('../components/ProfileCard/ProfileCard')),
-        color: 'red'
+        name: 'Password generator',
+        component: lazy(() => import('../components/PasswordGenerator/PasswordGenerator')),
+        color: '#fff'
     }
 ]
 
