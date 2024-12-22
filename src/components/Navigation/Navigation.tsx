@@ -1,12 +1,16 @@
 import React from "react"
 import { navigation, NavType } from "./consts"
+import { FaUser } from "react-icons/fa6"
 
 const Navigation = () => {
   const links = splitArray(navigation, 5)
+  const [isOpen, setIsOpen] = React.useState<boolean>(true)
   const [isOpenId, setIsOpenId] = React.useState<number>(0)
-  const handler = (id: number) => {
-    console.log(id)
+  const liHandler = (id: number) => {
     setIsOpenId(id)
+  }
+  const openHandler = () => {
+    setIsOpen(!isOpen)
   }
   return (
     <div className="w-[280px] min-h-[570px] flex flex-col justify-start items-center rounded-[30px] overflow-hidden shadow-[0_0_40px_0] shadow-gray-400 bg-white px-3 py-7">
@@ -21,15 +25,22 @@ const Navigation = () => {
       </div>
       {
         links.map((item) => (
-          <List key={item.id} >
+          <List key={item.id} open={isOpen}>
             {
               item.links.map((item) => (
-                <Li key={item.id} item={item} isOpen={isOpenId === item.id} setIsOpen={handler}/>
+                <Li key={item.id} item={item} isOpen={isOpenId === item.id} setIsOpen={liHandler}/>
               ))
             }
           </List>
         ))
       }
+      <button 
+        onClick={openHandler}
+        className="w-8 h-8  mt-auto ml-auto p-[8px] transition-colors duration-300
+        flex justify-center items-center
+        hover:bg-[#ccffe6] rounded-full">
+        <FaUser className="text-[grey]"/>
+      </button>
     </div >
   )
 }
@@ -38,10 +49,11 @@ export default Navigation
 
 
 
-const List = ({ children }: { children: React.ReactNode }) => {
+const List = ({ children, open }: { children: React.ReactNode, open?: boolean }) => {
   return (
-    <ul className="w-full h-full flex flex-col justify-start items-center gap-y-[10px] py-[20px]
-    border-t-[1px] border-gray-400">
+    <ul className={`w-full h-full flex flex-col justify-start items-center gap-y-[10px] py-[20px]
+    transition-opacity duration-300
+    border-t-[1px] border-gray-400 ${open ? "opacity-100" : "opacity-0"}`}>
       {children}
     </ul>
   )
