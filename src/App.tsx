@@ -15,7 +15,7 @@ function App() {
                         
                     const Component = item.component;
                     return (
-                    <CardContainer color={item.color} name={item.name} key={item.id}>
+                    <CardContainer color={item.color} name={`${item.id}: ${item.name}`} key={item.id}>
                           <Component />
                     </CardContainer>
 

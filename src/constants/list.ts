@@ -24,8 +24,14 @@ export const list: ListItem[] = [
         name: 'Password generator',
         component: lazy(() => import('../components/PasswordGenerator/PasswordGenerator')),
         color: '#fff'
+    },
+    {
+        id: 5,
+        name: 'Fur friends',
+        component: lazy(() => import('../components/FurFriends/FurFriends')),
+        color: '#ddff99'
     }
-]
+].reverse();
 
 
 type ListItem = {
