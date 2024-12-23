@@ -28,6 +28,8 @@ const PasswordGenerator = () => {
     }
 
     const copyPassword = () => {
+        if(password === "--empty yeat--") return
+        if(password === "--Copied--") return
         navigator.clipboard.writeText(password);
         setPassword('--Copied--')
     }
@@ -52,7 +54,7 @@ const PassViewer = ({ password, generate, copy}: { password: string, generate: (
     <div className="w-full h-[68px] flex flex-col mb-5">
         <h4 className="text-[10px] font-normal text-white uppercase mb-2">Generated Password</h4>
         <div className="text-[18px] font-bold text-white bg-[#110b1f] w-full h-full rounded-[5px] flex items-center px-4">
-            <span className="truncate">{password}</span>
+            <span className="truncate w-full text-ellipsis whitespace-nowrap overflow-hidden">{password}</span>
             < button className="text-[16px] font-bold text-[#db62db] ml-auto p-[5px]"
                 onClick={copy}
             >
@@ -113,7 +115,7 @@ const SettingToggle = ({ label, checked, onChange }: { label: string; checked: b
         <label className={`w-[30px] h-[15px] flex items-center rounded-full cursor-pointer drop-shadow ${checked ? "bg-[#db62db]" : "bg-gray-500"}`}>
             <input type="checkbox" checked={checked} onChange={onChange} className="hidden" />
             <div
-                className={`w-[13px] h-[13px] bg-white rounded-full transform transition-transform  drop-shadow ${checked ? "translate-x-[17px]" : "translate-x-0"
+                className={`w-[15px] h-[15px] bg-white rounded-full transform transition-transform  drop-shadow ${checked ? "translate-x-[15px]" : "translate-x-0"
                     }`}
             />
         </label>
