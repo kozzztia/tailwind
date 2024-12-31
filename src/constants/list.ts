@@ -30,6 +30,12 @@ export const list: ListItem[] = [
         name: 'Fur friends',
         component: lazy(() => import('../components/FurFriends/FurFriends')),
         color: '#ddff99'
+    },
+    {
+        id: 6,
+        name: 'FAQ',
+        component: lazy(() => import('../components/FAQ/FAQ')),
+        color: 'linear-gradient(0deg, rgba(227,227,227,1) 71%, rgba(0,254,251,1) 71%)'
     }
 ].reverse();
 
