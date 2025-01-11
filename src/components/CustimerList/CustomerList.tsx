@@ -1,6 +1,8 @@
 import style from "./style.module.css"
 import { Customer, mockCustomers } from "./const"
 import { useState } from "react"
+// empty rectangle
+import { FaEllipsisH, FaCheckSquare, FaRegSquare  } from "react-icons/fa"
 
 const CustomerList = () => {
   return (
@@ -49,13 +51,13 @@ const ListItem: React.FC<{ customer: Customer }> = ({ customer }) => {
       <button className={style.itemButton}
         onClick={checkHandler}
       >
-    V
+        {cheked ? <FaCheckSquare /> : <FaRegSquare />}
       </button>
       <div className={style.avatar}>
-      {
-        image ? <img src={image} alt={name} />
-        : <div><p>{name.split(" ")[0][0]}{name.split(" ")[1][0]}</p></div>
-      }
+        {
+          image ? <img src={image} alt={name} />
+            : <div><p>{name.split(" ")[0][0]}{name.split(" ")[1][0]}</p></div>
+        }
       </div>
       <h3>{name}</h3>
       <p>{email}</p>
@@ -64,7 +66,7 @@ const ListItem: React.FC<{ customer: Customer }> = ({ customer }) => {
       <p>{createdDate}</p>
 
       <button className={style.itemButton}>
-    ...
+        <FaEllipsisH />
       </button>
     </li>
   )
