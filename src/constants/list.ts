@@ -36,6 +36,12 @@ export const list: ListItem[] = [
         name: 'FAQ',
         component: lazy(() => import('../components/FAQ/FAQ')),
         color: 'linear-gradient(0deg, rgba(227,227,227,1) 71%, rgba(0,254,251,1) 71%)'
+    },
+    {
+        id: 7,
+        name: 'Customer list',
+        component: lazy(() => import('../components/CustimerList/CustomerList')),
+        color: '#fff'
     }
 ].reverse();
 
