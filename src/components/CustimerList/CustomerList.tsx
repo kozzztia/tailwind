@@ -14,6 +14,7 @@ const CustomerList = () => {
   };
 
   const checkHandler = (id: number) => {
+    setEditId(null);
     if (checkedList.includes(id)) {
       setCheckedList(checkedList.filter((item) => item !== id));
     } else {
@@ -81,7 +82,7 @@ const ListItem: React.FC<{
   checkHandler: (id: number) => void;
   checkedList: number[];
 }> = ({ customer, editHandler, editId, checkHandler, checkedList }) => {
-  const { id, name, email, phone, status, createdDate, image } = customer;
+  const { id, name, email, phone, status, createdDate, image, company } = customer;
 
   return (
     <li className={`${checkedList.includes(id) && style.activeItem} ${style.listItem}`}>
@@ -98,8 +99,11 @@ const ListItem: React.FC<{
           </div>
         )}
       </div>
-      <h3>{name}</h3>
-      <p>{email}</p>
+      <div className={style.info}>
+        <h3>{name}</h3>
+        <p>{email}</p>
+      </div>
+      <p>{company}</p>
       <p>{phone}</p>
       <span className={`${style.status} ${status === "Active" ? style.activeStatus : style.inactiveStatus}`}>{status}</span>
       <p>{createdDate}</p>
