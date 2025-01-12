@@ -12,8 +12,8 @@
   --element-button-color: #eae7f0;
   --active-color: #ccbfe2;
   --element-color: #f8f7fa;
-  --status-green: rgb(50, 187, 50);
-  --status-red: rgb(187, 50, 50);;
+  --status-green: rgb(129, 230, 129);
+  --status-red: rgb(230, 129, 129);
   --text-color: #1f1f22;
   --element-radius: 5px;
   --button-padding: 8px 12px;
@@ -69,12 +69,15 @@
   transition: inherit;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
   gap: var(--small-padding);
 }
 
 .listItem {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: var(--small-padding);
   padding: var(--medium-padding);
   border-radius: var(--element-radius);
@@ -89,8 +92,8 @@
     flex: 1;
   }
   .avatar {
-    max-width: var(--element-size);
-    height: var(--element-size);
+    max-width: calc(var(--element-size) * 1.5);
+    height: calc(var(--element-size) * 1.5);
     flex-shrink: 0;
     & > * {
       width: 100%;
@@ -99,8 +102,8 @@
       background-color: var(--accent-color);
     }
     img {
-      max-width: var(--element-size);
-      max-height: var(--element-size);
+      /* max-width: var(--element-size);
+      max-height: var(--element-size); */
       object-fit: cover;
       object-position: center;
     }
@@ -112,6 +115,18 @@
         font-weight: bold;
         color: var(--element-button-color);
       }
+    }
+  }
+  .info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--small-padding);
+    h3{
+      font-weight: bold;
+      font-size: 1.2em;
+      text-transform: capitalize;
     }
   }
   .itemButton {
@@ -127,6 +142,7 @@
     &:hover {
       background-color: var(--active-color);
     }
+    
     /* &:last-child{
         background-color: red;
       } */
@@ -175,8 +191,11 @@
   }
   .status{
     border-radius: var(--element-radius);
-    min-width: var(--element-size);
+    height: var(--element-size);
+    color: var(--text-color);
+    font-weight: bold;
   }
+
 }
 .activeStatus{
   background-color: var(--status-green);
@@ -187,4 +206,7 @@
 
 .activeItem {
   background: var(--active-color);
+  .itemButton:hover{
+    background-color: var(--element-button-color);
+  }
 }
