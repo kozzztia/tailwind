@@ -1,5 +1,6 @@
 :root {
   --main-size: 16px;
+  --element-size : 44px;
   --large-padding: 28px;
   --medium-padding: 20px;
   --small-padding: 16px;
@@ -11,6 +12,8 @@
   --element-button-color: #eae7f0;
   --active-color: #ccbfe2;
   --element-color: #f8f7fa;
+  --status-green: rgb(50, 187, 50);
+  --status-red: rgb(187, 50, 50);;
   --text-color: #1f1f22;
   --element-radius: 5px;
   --button-padding: 8px 12px;
@@ -77,6 +80,8 @@
   border-radius: var(--element-radius);
   background-color: var(--element-color);
   transition: inherit;
+  position: relative;
+  z-index: auto;
   & > * {
     display: flex;
     justify-content: center;
@@ -84,8 +89,8 @@
     flex: 1;
   }
   .avatar {
-    max-width: 44px;
-    height: 44px;
+    max-width: var(--element-size);
+    height: var(--element-size);
     flex-shrink: 0;
     & > * {
       width: 100%;
@@ -94,6 +99,8 @@
       background-color: var(--accent-color);
     }
     img {
+      max-width: var(--element-size);
+      max-height: var(--element-size);
       object-fit: cover;
       object-position: center;
     }
@@ -108,17 +115,76 @@
     }
   }
   .itemButton {
-    max-width: 44px;
-    width: 44px;
-    height: 44px;
-      svg {
-        background-color: transparent;
-        color: var(--accent-color);
+    max-width: var(--element-size);
+    width: var(--element-size);
+    height: var(--element-size);
+    border-radius: var(--element-radius);
+    transition: var(--element-transition);
+    svg {
+      background-color: transparent;
+      color: var(--accent-color);
+    }
+    &:hover {
+      background-color: var(--active-color);
+    }
+    /* &:last-child{
+        background-color: red;
+      } */
+  }
+  .editNav{
+    position: absolute;
+    right: 0;
+    top: calc(100% - 15px);
+    /* top: 100%; */
+    border: 1px solid var(--accent-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    z-index: 99;
+    background-color: var(--element-color);
+    border-radius: var(--element-radius);
+    color: var(--accent-color);
+    font-weight: bold;
+    height: auto;
+    &::before{
+      content: "";
+      width: var(--small-padding);
+      height: var(--small-padding);
+      top: -9px;
+      right: 32px;
+      display: block;
+      position: absolute;
+      background-color: inherit;
+      transform: rotate(45deg);
+      border-top: 1px solid var(--accent-color);
+      border-left: 1px solid var(--accent-color);
+      z-index: 1; 
+    }
+    a{
+      padding :var(--small-padding);
+      display: flex;
+      align-items: center;
+      gap :var(--small-padding);
+      transition: var(--element-transition);
+      z-index: 99;
+      &:hover{
+        background-color: var(--active-color);
       }
+    }
+  }
+  .status{
+    border-radius: var(--element-radius);
+    min-width: var(--element-size);
   }
 }
+.activeStatus{
+  background-color: var(--status-green);
+}
+.inactiveStatus{
+  background-color: var(--status-red);
+}
 
-.active {
-  background: var(--active-color);
+.activeItem {
   background: var(--active-color);
 }
