@@ -18,6 +18,7 @@
   --element-radius: 5px;
   --button-padding: 8px 12px;
   --element-transition: all 0.5s;
+  --element-width: calc(var(--element-size) * 1.5);
 
   @media screen and (max-width: 600px) {
     --main-size: 12px;
@@ -75,9 +76,6 @@
 }
 
 .listItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   gap: var(--small-padding);
   padding: var(--medium-padding);
   border-radius: var(--element-radius);
@@ -85,16 +83,33 @@
   transition: inherit;
   position: relative;
   z-index: auto;
-  & > * {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
+  display: grid;
+  grid-template-columns: var(--element-width) var(--element-width) 1fr 1fr 1fr 1fr 1fr var(--element-width);
+  grid-template-areas: "check avatar info company number status date edit";
+  p{
+    white-space: nowrap;
   }
+  & > * {
+    align-self: center;
+    place-self: center;
+
+  }
+  @media screen and (max-width: 992px) {
+    grid-template-columns:  auto 1fr 1fr;
+    grid-template-areas: "avatar info check"
+                        "date company number"
+                        "status status  edit "
+    ;
+  }
+
+
+
+
   .avatar {
+    grid-area: avatar;
     max-width: calc(var(--element-size) * 1.5);
     height: calc(var(--element-size) * 1.5);
-    flex-shrink: 0;
+    width :100%;
     & > * {
       width: 100%;
       height: 100%;
@@ -102,8 +117,6 @@
       background-color: var(--accent-color);
     }
     img {
-      /* max-width: var(--element-size);
-      max-height: var(--element-size); */
       object-fit: cover;
       object-position: center;
     }
@@ -116,8 +129,13 @@
         color: var(--element-button-color);
       }
     }
+    @media screen and (max-width: 992px) {
+      max-width: calc(var(--element-size) * 2);
+      height: calc(var(--element-size) * 2);
+    }
   }
   .info{
+    grid-area: info;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -128,6 +146,10 @@
       font-size: 1.2em;
       text-transform: capitalize;
     }
+    @media screen and (max-width: 992px) {
+      justify-self: flex-end;
+      justify-content: start;
+    }
   }
   .itemButton {
     max-width: var(--element-size);
@@ -135,6 +157,11 @@
     height: var(--element-size);
     border-radius: var(--element-radius);
     transition: var(--element-transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+
     svg {
       background-color: transparent;
       color: var(--accent-color);
@@ -142,16 +169,20 @@
     &:hover {
       background-color: var(--active-color);
     }
-    
-    /* &:last-child{
-        background-color: red;
-      } */
+    &:first-child{
+      grid-area: check;
+      align-self: flex-start;
+
+      }
+    &:last-child{
+      grid-area: edit;
+      }
   }
   .editNav{
     position: absolute;
     right: 0;
     top: calc(100% - 15px);
-    /* top: 100%; */
+    top: 100%;
     border: 1px solid var(--accent-color);
     display: flex;
     flex-direction: column;
@@ -162,12 +193,11 @@
     border-radius: var(--element-radius);
     color: var(--accent-color);
     font-weight: bold;
-    height: auto;
     &::before{
       content: "";
       width: var(--small-padding);
       height: var(--small-padding);
-      top: -9px;
+      top: -8px;
       right: 32px;
       display: block;
       position: absolute;
@@ -190,10 +220,32 @@
     }
   }
   .status{
+    grid-area: status;
     border-radius: var(--element-radius);
     height: var(--element-size);
     color: var(--text-color);
     font-weight: bold;
+    width :100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .company{
+    grid-area: company;
+  }
+  .number{
+    grid-area: number;
+    @media screen and (max-width: 992px) {
+      width: 100%;
+      text-align: right;
+    }
+  }
+  .date{
+    grid-area: date;
+    @media screen and (max-width: 992px) {
+      width: 100%;
+      text-align: left;
+    }
   }
 
 }

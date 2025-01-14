@@ -103,10 +103,10 @@ const ListItem: React.FC<{
         <h3>{name}</h3>
         <p>{email}</p>
       </div>
-      <p>{company}</p>
-      <p>{phone}</p>
+      <p className={style.company}>{company}</p>
+      <p className={style.number}>{phone}</p>
       <span className={`${style.status} ${status === "Active" ? style.activeStatus : style.inactiveStatus}`}>{status}</span>
-      <p>{createdDate}</p>
+      <p className={style.date}>{createdDate}</p>
       <EditButton editHandler={() => editHandler(id)} />
       {
         editId === id && (
