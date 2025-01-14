@@ -43,12 +43,12 @@ export const list: ListItem[] = [
         component: lazy(() => import('../components/CustomerList/CustomerList')),
         color: '#fff'
     },
-    // {
-    //     id: 8,
-    //     name: 'Progress bars',
-    //     component: lazy(() => import('../components/ProgressBars/ProgressBars')),
-    //     color: '#4774d6'
-    // }
+    {
+        id: 8,
+        name: 'Progress bars',
+        component: lazy(() => import('../components/ProgressBars/ProgressBars')),
+        color: '#4774d6'
+    }
 ].reverse();
 
 
