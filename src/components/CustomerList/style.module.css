@@ -94,13 +94,6 @@
     place-self: center;
 
   }
-  @media screen and (max-width: 992px) {
-    grid-template-columns:  auto 1fr 1fr;
-    grid-template-areas: "avatar info check"
-                        "date company number"
-                        "status status  edit "
-    ;
-  }
 
 
 
@@ -147,8 +140,12 @@
       text-transform: capitalize;
     }
     @media screen and (max-width: 992px) {
-      justify-self: flex-end;
+      /* justify-self: flex-end; */
+      flex-direction: row;
       justify-content: start;
+    }
+    @media screen and (max-width: 768px) {
+      flex-direction: column;
     }
   }
   .itemButton {
@@ -247,6 +244,14 @@
       text-align: left;
     }
   }
+  @media screen and (max-width: 992px) {
+    grid-template-columns:  auto 1fr 1fr;
+    grid-template-areas: "avatar info check"
+                        "date company number"
+                        "status status  edit "
+    ;
+  }
+
 
 }
 .activeStatus{
