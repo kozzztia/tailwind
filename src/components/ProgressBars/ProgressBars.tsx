@@ -1,105 +1,97 @@
-
-import { useEffect, useState } from 'react';
-import styles from './styles.module.css'
+import { useEffect, useState } from "react";
+import React from "react";
+import styles from "./styles.module.css";
 
 const ProgressBars = () => {
-  const [progress, setProgress] = useState<number>(4);
+  const dashedCount = 10; // Количество секций DashedProgressBar
+  const [progress, setProgress] = useState<number>(0); // Общий прогресс
+  const [dashedProgress, setDashedProgress] = useState<number>(0); // Прогресс DashedProgressBar
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prev) => (prev < 6 ? prev + 1 : 0)); 
-    }, 500);
+      setProgress((prev) => {
+        if (prev >= 100) {
+          // Сброс прогресса
+          setDashedProgress(0);
+          return 0;
+        }
 
-    return () => clearInterval(interval); 
-  }, []);
+        const nextProgress = prev + 1;
 
+        // Обновляем DashedProgressBar каждые 10%
+        if (nextProgress % 10 === 0) {
+          setDashedProgress(Math.min(nextProgress / 10, dashedCount));
+        }
 
+        return nextProgress;
+      });
+    }, 100); // Скорость обновления (100ms = 1%)
+
+    return () => clearInterval(interval);
+  }, [dashedCount]);
 
   return (
     <div className={styles.container}>
+      {/* DashedProgressBar обновляется только при изменении dashedProgress */}
+      <DashedProgressBar count={1} progress={dashedProgress} length={dashedCount} />
 
-      <DashedProgressBar count={1} progress={progress}/>
-
-      <ProcentProgressBar count={2} progress={progress}/>
-
-      <div className={styles.progressBar}>
-        progrree
-      </div>
-
-      <div className={styles.progressBar}>
-        progrree
-      </div>
-
-      <div className={styles.progressBar}>
-        progrree
-      </div>
-
-      <div className={styles.progressBar}>
-        progrree
-      </div>
-
-      <div className={styles.progressBar}>
-        progrree
-      </div>
-
-      <div className={styles.progressBar}>
-        progrree
-      </div>
-
+      {/* Процентный прогрессбар */}
+      <ProcentProgressBar count={2} progress={progress} />
     </div>
-  )
-}
+  );
+};
 
 export default ProgressBars;
 
-
-const ProgressBarContainer: React.FC<{ count: number, children: React.ReactNode, className?: string }> = ({ count, children, className }) => {
+const Container: React.FC<{
+  count: number;
+  children: React.ReactNode;
+  className?: string;
+}> = React.memo(({ count, children, className }) => {
   return (
-    <div className={[styles.progressBar, className].join(' ')}>
+    <div className={[styles.progressBar, className].join(" ")}>
       <Counter count={count} />
       {children}
     </div>
-  )
-}
+  );
+});
 
-
-const Counter: React.FC<{ count: number }> = ({ count }) => {
+const Counter: React.FC<{ count: number }> = React.memo(({ count }) => {
   return (
     <div className={styles.counter}>
       <span>{count}</span>
     </div>
-  )
-}
-
-const DashedProgressBar: React.FC<{ count: number, progress: number }> = ({ count, progress }) => {
-  const arr = [1, 2, 3, 4, 5, 6]
-  return (
-    <ProgressBarContainer count={count} className={styles.dashedProgressBar}>
-      <div className={styles.line}>
-        {
-          arr.map((item) => (
-            <span key={item} className={`${styles.dashed} ${item <= progress ? styles.active : ''}`}>
-            </span>
-          ))
-        }
-      </div>
-    </ProgressBarContainer>
-  )
-}
-
-const ProcentProgressBar: React.FC<{ count: number; progress: number }> = ({ count, progress }) => {
-  const clampedProgress = Math.min(Math.max(100 * (progress / 6), 0));
-
-  return (
-    <ProgressBarContainer count={count} className={styles.procentProgressBar}>
-      <div
-        className={styles.line}
-        style={{ width: `${clampedProgress}%` }} 
-      ></div>
-    </ProgressBarContainer>
   );
-};
+});
 
+const DashedProgressBar: React.FC<{ count: number; progress: number; length: number }> = React.memo(
+  ({ count, progress, length }) => {
+    const arr = [...Array(length).keys()]; // Массив для секций
+    console.log("dashed");
+    return (
+      <Container count={count} className={styles.dashedProgressBar}>
+        <div className={styles.line}>
+          {arr.map((item) => (
+            <span
+              key={item}
+              className={`${styles.dashed} ${item < progress ? styles.active : ""}`}
+            ></span>
+          ))}
+        </div>
+      </Container>
+    );
+  }
+);
 
-
-
+const ProcentProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
+  ({ count, progress }) => {
+    console.log("procent");
+    return (
+      <Container count={count} className={styles.procentProgressBar}>
+        <div className={styles.line} style={{ width: `${progress}%` }}>
+          <div className={styles.procent}>{progress}%</div>
+        </div>
+      </Container>
+    );
+  }
+);
