@@ -78,46 +78,61 @@
     position: relative;
     display: flex;
     align-items: center;
-    .line {
+    .line{
         position: relative;
+        width: 100%;
+        background: var(--progress-element-dark-color);
         height: var(--line-height);
-        background-color: var(--progress-accent-color);
         border-radius: 10px;
-        width: 0%;
-        transition: width 0s ;
-
-        .procent{
-            position: absolute;
-            text-align: center;
+        .progressOne{
+            position: relative;
+            background: var(--progress-accent-color);
+            height:  inherit;
+            border-radius: var(--progress-radius);
+        }  
+        .procentOne{
+            top: -30px;
+            right: -10px;
             width :30px;
             height: 30px;
-            right: -10px;
-            top: -30px;
-            background: var(--progress-text-color);;
+            border-radius: 3px;
+            padding: 5px;
+            font-weight: bold;
+            position: absolute;
+            background-color: var(--progress-element-light-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: var(--progress-element-dark-color);
-            padding: 2px;
-            transform: scale(0.8);
-            border-radius: 5px;
-            &:before{  
+            scale: 0.7;
+            /* arrow botton */
+            &::after{
                 content: "";
                 position: absolute;
-                top: 100%;
+                bottom: -4px;
                 left: 50%;
-                margin-left: -5px;
-                border-width: 5px;
-                border-color: var(--progress-text-color) transparent transparent transparent;
+                transform: translateX(-50%);
+                border-top: 5px solid var(--progress-element-light-color);
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
             }
         }
 
-      }
-      .procentTwo{
-        color: var(--progress-text-color);
-        position: absolute;
-        text-align: center;
-        top: var(--padding);
-        right: 0;
-        left: 0;
+        .progressTwo{
+            background: var(--progress-accent-color);
+            height:  inherit;
+            border-radius: var(--progress-radius);
+        }  
+        .procentTwo{
+            position: absolute;
+            top: -25px;
+            left: -10px;
+            width : 100%;
+            text-align: center;
+        }
+
     }
+
   }
   
 

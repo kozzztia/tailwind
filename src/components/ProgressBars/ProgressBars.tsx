@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 const ProgressBars = () => {
   const dashedCount = 10;
   const [progress, setProgress] = useState<number>(0);
-  const [dashedProgress, setDashedProgress] = useState<number>(0); 
+  const [dashedProgress, setDashedProgress] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,7 +23,7 @@ const ProgressBars = () => {
 
         return nextProgress;
       });
-    }, 100); 
+    }, 100);
 
     return () => clearInterval(interval);
   }, [dashedCount]);
@@ -64,7 +64,7 @@ const Counter: React.FC<{ count: number }> = React.memo(({ count }) => {
 
 const DashedProgressBar: React.FC<{ count: number; progress: number; length: number }> = React.memo(
   ({ count, progress, length }) => {
-    const arr = [...Array(length).keys()]; 
+    const arr = [...Array(length).keys()];
     console.log("dashed");
     return (
       <Container count={count} className={styles.dashedProgressBar}>
@@ -86,8 +86,10 @@ const ProcentProgressBar: React.FC<{ count: number; progress: number }> = React.
     console.log("procent");
     return (
       <Container count={count} className={styles.procentProgressBar}>
-        <div className={styles.line} style={{ width: `${progress}%` }}>
-          <div className={styles.procent}>{progress}</div>
+        <div className={styles.line}>
+          <div className={styles.progressOne} style={{ width: `${progress}%` }}>
+            <div className={styles.procentOne}>{progress}</div>
+          </div>
         </div>
       </Container>
     );
@@ -99,8 +101,9 @@ const ProcentProgressBarTwo: React.FC<{ count: number; progress: number }> = Rea
     console.log("procent");
     return (
       <Container count={count} className={styles.procentProgressBar}>
-                  <div className={styles.procentTwo}>{progress}%</div>
-        <div className={styles.line} style={{ width: `${progress}%` }}>
+        <div className={styles.line}>
+          <div className={styles.procentTwo}>{progress}%</div>
+          <div className={styles.progressTwo} style={{ width: `${progress}%` }}></div>
         </div>
       </Container>
     );
