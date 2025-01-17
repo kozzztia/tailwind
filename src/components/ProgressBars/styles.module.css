@@ -48,3 +48,44 @@
         }
     }
 }
+
+.dashedProgressBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .line{
+        position: relative;
+        width: 100%;
+        height: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        .dashed{
+            width: 100%;
+            height: 100%;
+            background: var(--progress-element-dark-color);
+            border-radius: 10px;
+        }  
+        .active{
+            background: var(--progress-accent-color);
+        } 
+    }
+}
+.procentProgressBar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .line {
+        height: 10px;
+        background-color: var(--progress-accent-color);
+        border-radius: 10px;
+        width: 0%;
+        transition: width 0.3s ease-in-out;
+      }
+  }
+  
+
+
+
