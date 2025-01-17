@@ -3,40 +3,38 @@ import React from "react";
 import styles from "./styles.module.css";
 
 const ProgressBars = () => {
-  const dashedCount = 10; // Количество секций DashedProgressBar
-  const [progress, setProgress] = useState<number>(0); // Общий прогресс
-  const [dashedProgress, setDashedProgress] = useState<number>(0); // Прогресс DashedProgressBar
+  const dashedCount = 10;
+  const [progress, setProgress] = useState<number>(0);
+  const [dashedProgress, setDashedProgress] = useState<number>(0); 
 
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
-          // Сброс прогресса
           setDashedProgress(0);
           return 0;
         }
 
         const nextProgress = prev + 1;
 
-        // Обновляем DashedProgressBar каждые 10%
         if (nextProgress % 10 === 0) {
           setDashedProgress(Math.min(nextProgress / 10, dashedCount));
         }
 
         return nextProgress;
       });
-    }, 100); // Скорость обновления (100ms = 1%)
+    }, 100); 
 
     return () => clearInterval(interval);
   }, [dashedCount]);
 
   return (
     <div className={styles.container}>
-      {/* DashedProgressBar обновляется только при изменении dashedProgress */}
       <DashedProgressBar count={1} progress={dashedProgress} length={dashedCount} />
 
-      {/* Процентный прогрессбар */}
       <ProcentProgressBar count={2} progress={progress} />
+
+      <ProcentProgressBarTwo count={3} progress={progress} />
     </div>
   );
 };
@@ -66,7 +64,7 @@ const Counter: React.FC<{ count: number }> = React.memo(({ count }) => {
 
 const DashedProgressBar: React.FC<{ count: number; progress: number; length: number }> = React.memo(
   ({ count, progress, length }) => {
-    const arr = [...Array(length).keys()]; // Массив для секций
+    const arr = [...Array(length).keys()]; 
     console.log("dashed");
     return (
       <Container count={count} className={styles.dashedProgressBar}>
@@ -89,7 +87,20 @@ const ProcentProgressBar: React.FC<{ count: number; progress: number }> = React.
     return (
       <Container count={count} className={styles.procentProgressBar}>
         <div className={styles.line} style={{ width: `${progress}%` }}>
-          <div className={styles.procent}>{progress}%</div>
+          <div className={styles.procent}>{progress}</div>
+        </div>
+      </Container>
+    );
+  }
+);
+
+const ProcentProgressBarTwo: React.FC<{ count: number; progress: number }> = React.memo(
+  ({ count, progress }) => {
+    console.log("procent");
+    return (
+      <Container count={count} className={styles.procentProgressBar}>
+                  <div className={styles.procentTwo}>{progress}%</div>
+        <div className={styles.line} style={{ width: `${progress}%` }}>
         </div>
       </Container>
     );
