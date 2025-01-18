@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import React from "react";
 import styles from "./styles.module.css";
 
@@ -35,17 +35,15 @@ const ProgressBars = () => {
       <ProcentProgressBar count={2} progress={progress} />
 
       <ProcentProgressBarTwo count={3} progress={progress} />
+
+      <StepProgressBar count={4} progress={progress} steps={["Start", "Search", "Refactor", "Save"]} />
     </div>
   );
 };
 
 export default ProgressBars;
 
-const Container: React.FC<{
-  count: number;
-  children: React.ReactNode;
-  className?: string;
-}> = React.memo(({ count, children, className }) => {
+const Container: React.FC<{count: number;children: React.ReactNode;className?: string;}> = React.memo(({ count, children, className }) => {
   return (
     <div className={[styles.progressBar, className].join(" ")}>
       <Counter count={count} />
@@ -65,7 +63,6 @@ const Counter: React.FC<{ count: number }> = React.memo(({ count }) => {
 const DashedProgressBar: React.FC<{ count: number; progress: number; length: number }> = React.memo(
   ({ count, progress, length }) => {
     const arr = [...Array(length).keys()];
-    console.log("dashed");
     return (
       <Container count={count} className={styles.dashedProgressBar}>
         <div className={styles.line}>
@@ -83,7 +80,6 @@ const DashedProgressBar: React.FC<{ count: number; progress: number; length: num
 
 const ProcentProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
   ({ count, progress }) => {
-    console.log("procent");
     return (
       <Container count={count} className={styles.procentProgressBar}>
         <div className={styles.line}>
@@ -98,12 +94,72 @@ const ProcentProgressBar: React.FC<{ count: number; progress: number }> = React.
 
 const ProcentProgressBarTwo: React.FC<{ count: number; progress: number }> = React.memo(
   ({ count, progress }) => {
-    console.log("procent");
     return (
       <Container count={count} className={styles.procentProgressBar}>
         <div className={styles.line}>
           <div className={styles.procentTwo}>{progress}%</div>
           <div className={styles.progressTwo} style={{ width: `${progress}%` }}></div>
+        </div>
+      </Container>
+    );
+  }
+);
+
+const StepProgressBar: React.FC<{ count: number; progress: number; steps: string[] }> = React.memo(
+  ({ count, progress, steps }) => {
+    const radius = 20;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (progress / 100) * circumference;
+
+    // Определение текущего шага с использованием useMemo
+    const step = useMemo(() => {
+      if (progress <= 10 && progress > 0) return steps[0];
+      if (progress > 10 && progress <= 50) return steps[1];
+      if (progress > 50 && progress <= 90) return steps[2];
+      if (progress > 90 && progress <= 100) return steps[3];
+      return null;
+    }, [progress, steps]);
+
+    return (
+      <Container count={count} className={styles.stepProgressBar}>
+        {/* Круговой прогресс */}
+        <div className={styles.section}>
+          <div className={styles.circle}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+              {/* Фон */}
+              <circle
+                className={styles.back}
+                cx="25"
+                cy="25"
+                r={radius}
+                strokeDasharray={circumference}
+                strokeDashoffset="0"
+              ></circle>
+              {/* Прогресс */}
+              <circle
+                className={styles.front}
+                cx="25"
+                cy="25"
+                r={radius}
+                strokeDasharray={circumference}
+                strokeDashoffset={offset}
+              ></circle>
+              {/* Текст прогресса */}
+              <text className={styles.text} x="50%" y="50%" dominantBaseline="middle" textAnchor="middle">
+                {progress}%
+              </text>
+            </svg>
+          </div>
+        </div>
+        {/* Отображение текущего шага */}
+        <div className={`${styles.section} ${styles.steps}`}>
+          {
+            steps.map((item) => (
+              <div key={item} className={`${styles.step} ${step === item ? styles.active : styles.inactive}`}>
+                {item}
+              </div>
+            ))
+          }
         </div>
       </Container>
     );
