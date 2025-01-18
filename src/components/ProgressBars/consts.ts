@@ -1,0 +1,1 @@
+export const steps = ["Start", "Search", "Result", "End"];

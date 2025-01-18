@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import styles from "./styles.module.css";
+import { steps } from "./consts";
 
 const ProgressBars = () => {
   const dashedCount = 10;
@@ -36,7 +37,7 @@ const ProgressBars = () => {
 
       <ProcentProgressBarTwo count={3} progress={progress} />
 
-      <StepProgressBar count={4} progress={progress} steps={["Start", "Search", "Refactor", "Save"]} />
+      <StepProgressBar count={4} progress={progress} />
     </div>
   );
 };
@@ -105,20 +106,28 @@ const ProcentProgressBarTwo: React.FC<{ count: number; progress: number }> = Rea
   }
 );
 
-const StepProgressBar: React.FC<{ count: number; progress: number; steps: string[] }> = React.memo(
-  ({ count, progress, steps }) => {
+const StepProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
+  ({ count, progress }) => {
     const radius = 20;
     const circumference = 2 * Math.PI * radius;
     const offset = circumference - (progress / 100) * circumference;
+    const [step, setStep] = useState<string>(steps[0]);
 
-    // Определение текущего шага с использованием useMemo
-    const step = useMemo(() => {
-      if (progress <= 10 && progress > 0) return steps[0];
-      if (progress > 10 && progress <= 50) return steps[1];
-      if (progress > 50 && progress <= 90) return steps[2];
-      if (progress > 90 && progress <= 100) return steps[3];
-      return null;
-    }, [progress, steps]);
+    useEffect(() => {
+      const newStep = progress <= 10
+        ? steps[0]
+        : progress > 10 && progress <= 50
+        ? steps[1]
+        : progress > 50 && progress <= 90
+        ? steps[2]
+        : progress > 90
+        ? steps[3]
+        : "error";
+
+      if (newStep !== step) {
+        setStep(newStep);
+      }
+    }, [progress, step]);
 
     return (
       <Container count={count} className={styles.stepProgressBar}>
@@ -153,13 +162,14 @@ const StepProgressBar: React.FC<{ count: number; progress: number; steps: string
         </div>
         {/* Отображение текущего шага */}
         <div className={`${styles.section} ${styles.steps}`}>
-          {
-            steps.map((item) => (
-              <div key={item} className={`${styles.step} ${step === item ? styles.active : styles.inactive}`}>
-                {item}
-              </div>
-            ))
-          }
+          {steps.map((item) => (
+            <div
+              key={item}
+              className={`${styles.step} ${step === item ? styles.active : styles.inactive}`}
+            >
+              {item}
+            </div>
+          ))}
         </div>
       </Container>
     );
