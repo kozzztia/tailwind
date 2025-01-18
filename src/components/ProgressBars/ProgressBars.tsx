@@ -37,14 +37,22 @@ const ProgressBars = () => {
 
       <ProcentProgressBarTwo count={3} progress={progress} />
 
-      <StepProgressBar count={4} progress={progress} />
+      <StepCirceProgressBar count={4} progress={progress} />
+
+      <StepProgressBar count={5} progress={progress} />
+
+      <CirceProgressBar count={6} progress={progress} />
+
+      <DecoreProgressBar count={7} progress={progress} />
+
+      <DashedStepProgressBar count={8} progress={progress}  step={10}/>
     </div>
   );
 };
 
 export default ProgressBars;
 
-const Container: React.FC<{count: number;children: React.ReactNode;className?: string;}> = React.memo(({ count, children, className }) => {
+const Container: React.FC<{ count: number; children: React.ReactNode; className?: string; }> = React.memo(({ count, children, className }) => {
   return (
     <div className={[styles.progressBar, className].join(" ")}>
       <Counter count={count} />
@@ -106,7 +114,7 @@ const ProcentProgressBarTwo: React.FC<{ count: number; progress: number }> = Rea
   }
 );
 
-const StepProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
+const StepCirceProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
   ({ count, progress }) => {
     const radius = 20;
     const circumference = 2 * Math.PI * radius;
@@ -117,12 +125,12 @@ const StepProgressBar: React.FC<{ count: number; progress: number }> = React.mem
       const newStep = progress <= 10
         ? steps[0]
         : progress > 10 && progress <= 50
-        ? steps[1]
-        : progress > 50 && progress <= 90
-        ? steps[2]
-        : progress > 90
-        ? steps[3]
-        : "error";
+          ? steps[1]
+          : progress > 50 && progress <= 90
+            ? steps[2]
+            : progress > 90
+              ? steps[3]
+              : "error";
 
       if (newStep !== step) {
         setStep(newStep);
@@ -175,3 +183,141 @@ const StepProgressBar: React.FC<{ count: number; progress: number }> = React.mem
     );
   }
 );
+
+const StepProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
+  ({ count, progress }) => {
+    const [step, setStep] = useState<string>(steps[0]);
+    useEffect(() => {
+      const newStep = progress <= 10
+        ? steps[0]
+        : progress > 10 && progress <= 50
+          ? steps[1]
+          : progress > 50 && progress <= 90
+            ? steps[2]
+            : progress > 90
+              ? steps[3]
+              : "error";
+
+      if (newStep !== step) {
+        setStep(newStep);
+      }
+    }, [progress, step]);
+
+    return (
+      <Container count={count} className={styles.stepProgressBar}>
+        <div className={`${styles.section} ${styles.steps}`}>
+          {steps.map((item) => (
+            <div
+              key={item}
+              className={`${styles.step} ${step === item ? styles.active : styles.inactive}`}
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </Container>
+    );
+  }
+);
+
+const CirceProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
+  ({ count, progress }) => {
+    const radius = 20;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (progress / 100) * circumference;
+
+    return (
+      <Container count={count} className={styles.stepProgressBar}>
+        {/* Круговой прогресс */}
+        <div className={styles.section}>
+          <div className={styles.circle}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+              {/* Фон */}
+              <circle
+                className={styles.back}
+                cx="25"
+                cy="25"
+                r={radius}
+                strokeDasharray={circumference}
+                strokeDashoffset="0"
+              ></circle>
+              {/* Прогресс */}
+              <circle
+                className={styles.front}
+                cx="25"
+                cy="25"
+                r={radius}
+                strokeDasharray={circumference}
+                strokeDashoffset={offset}
+              ></circle>
+              {/* Текст прогресса */}
+              <text className={styles.text} x="50%" y="50%" dominantBaseline="middle" textAnchor="middle">
+                {progress}%
+              </text>
+            </svg>
+          </div>
+        </div>
+      </Container>
+    );
+  }
+);
+
+const DecoreProgressBar: React.FC<{ count: number; progress: number }> = React.memo(
+  ({ count, progress }) => {
+    return (
+      <Container count={count} className={styles.decoreProgressBar}>
+        <div className={styles.line}>
+          <div className={styles.procent} style={{ width: `${100 - progress}%` }}>
+          </div>
+        </div>
+      </Container>
+    );
+  }
+);
+
+const DashedStepProgressBar: React.FC<{ count: number; progress: number, step: number }> = React.memo(({ count, progress ,step }) => {
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+  const [circleStep, setCircleStep] = useState<number>(0);
+  const [progressStep, setProgressStep] = useState<number>(0);
+  useEffect(() => {
+    if(progress % step === 0 || progress === 0) {
+      setCircleStep(progress * circumference / 100);
+      setProgressStep(progress);
+    }
+  }, [circumference, progress, step]);
+
+  return (
+    <Container count={count} className={styles.stepProgressBar}>
+      {/* Круговой прогресс */}
+      <div className={styles.section}>
+        <div className={styles.circle}>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="50" height="50">
+            {/* Фон */}
+            <circle
+              className={styles.back}
+              cx="25"
+              cy="25"
+              r={radius}
+              strokeDasharray={circumference}
+              strokeDashoffset="0"
+            ></circle>
+            {/* Прогресс */}
+            <circle
+              className={styles.front}
+              cx="25"
+              cy="25"
+              r={radius}
+              strokeDasharray={circumference}
+              strokeDashoffset={circumference - circleStep}
+            ></circle>
+            {/* Текст прогресса */}
+            <text className={styles.text} x="50%" y="50%" dominantBaseline="middle" textAnchor="middle">
+              {progressStep.toFixed(0)}%
+            </text>
+          </svg>
+        </div>
+      </div>   
+    </Container>
+  );
+});
