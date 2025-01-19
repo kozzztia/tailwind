@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import styles from './style.module.css';
 
-const RateColor = () => {
+const ColorRange = () => {
   const [value, setValue] = useState<number>(() => {
     const rateColor = getComputedStyle(document.documentElement).getPropertyValue("--rate-color").trim();
     return parseFloat(rateColor) || 1;
@@ -86,4 +86,4 @@ const RateColor = () => {
   );
 };
 
-export default RateColor;
+export default ColorRange;
