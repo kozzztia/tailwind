@@ -50,7 +50,7 @@ export const list: ListItem[] = [
         color: '#4774d6'
     },
     {
-        id: 8,
+        id: 9,
         name: 'Rate us',
         component: lazy(() => import('../components/RateUs/RateUs')),
         color: '#d9bd59'

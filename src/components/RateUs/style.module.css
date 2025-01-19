@@ -1,11 +1,98 @@
+:root {
+  --rate-color: 1;
+  --rate-element-radius: 5px;
+  --rate-accent-color: hsl(var(--rate-color), 75%, 55%);
+  --rate-accent-color2: hsl(var(--rate-color), 50%, 70%);
+  --rate-element-bg-color: hsl(var(--rate-color), 20%, 90%);
+  --rate-text-color: hsl(var(--rate-color), 15%, 20%);
+  --rate-border-color: hsl(var(--rate-color), 40%, 80%);
+  --rate-hover-color: hsl(var(--rate-color), 85%, 45%);
 
-.container{
+  --rate-width: 500px;
+  --rate-padding: 20px;
+  --rate-element-padding: 10px;
+  --rate-input-width: 10px;
+
+  @media screen and (max-width: 600px) {
+    --rate-width: 100%;
+    --padding: 10px;
+    --element-padding: 5px;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  width: var(--rate-width);
+  padding: var(--padding);
+  height: 100%;
+  background: transparent;
+}
+.rangeContainer {
+  width: 100%;
+  max-width: var(--rate-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--rate-element-bg-color);
+  padding: var(--rate-element-padding);
+  border-radius: var(--rate-element-radius);
+  .label {
+    width: 100%;
+    min-height: 50px;
+    padding: var(--rate-element-padding) 0;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+    transition: background-color 0.3s ease;
+    &:hover {
+        .filled {
+            transition: inherit;
+            background-color: var(--rate-hover-color);
+        }
+        .cursor {
+            transition: inherit;
+            background-color: var(--rate-hover-color);
+        }
+    }
+  }
+  .track {
+    position: relative;
+    width: 100%;
+    height: var(--rate-input-width);
+    background: var(--rate-accent-color2);
+    border-radius: var(--rate-element-radius);
+    cursor: pointer;
+  }
+  .filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--rate-accent-color);
+    border-radius: 5px 0 0 5px;
+  }
+  .cursor {
+    position: absolute;
+    top: 50%;
+    width: 20px; /* Замените на фиксированное значение */
+    height: 20px; /* Замените на фиксированное значение */
+    background: var(--rate-accent-color);
+    border: 2px solid var(--rate-element-bg-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 5px var(--rate-accent-color);
+  }
+  .wiev {
+    color: var(--rate-text-color);
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    width: 200px;
-    height: 200px;
-    background: #000;
+    width: 100%;
+  }
 }
