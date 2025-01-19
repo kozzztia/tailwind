@@ -51,8 +51,8 @@ export const list: ListItem[] = [
     },
     {
         id: 9,
-        name: 'Rate us',
-        component: lazy(() => import('../components/RateUs/RateUs')),
+        name: 'Color range',
+        component: lazy(() => import('../components/ColorRange/ColorRange')),
         color: '#d9bd59'
     }
 ].reverse();
