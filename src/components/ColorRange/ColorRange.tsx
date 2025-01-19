@@ -46,7 +46,7 @@ const ColorRange = () => {
       <div className={styles.wiev}>
         <form onSubmit={(e) => e.preventDefault()}>
           <h2>sign up</h2>
-          <p>Join us now! Sign up to kick0start your journey.</p>
+          <p>Join us now! Sign up to kick-start<br/> your journey.</p>
           <label>
             <span>Name</span>
             <input type="text" placeholder="Name" />
