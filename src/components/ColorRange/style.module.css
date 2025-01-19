@@ -115,7 +115,7 @@ form{
   max-width: 250px;
   height: 100%;
   border-radius: var(--rate-element-radius);
-  padding: calc(var(--rate-element-padding)*3) var(--rate-element-padding);
+  padding: calc(var(--rate-element-padding)*3) calc(var(--rate-element-padding)*2);
   color: var(--rate-text-color);
   box-shadow: 0 0 10px var(--rate-text-color);
   background: var(--rate-background);
@@ -133,6 +133,8 @@ form{
     font-size: 10px;
     margin-bottom: var(--rate-element-padding);
     transition: inherit;
+    font-weight: bold;
+
   }
   label{
     width: 100%;
@@ -188,15 +190,17 @@ form{
     height: 30px;
     border-radius: var(--rate-element-radius);
     border: 1px solid var(--rate-border-color);
-    background-color: var(--rate-accent-color);
-    color: var(--rate-border-color);
-    font-size: 10px;
+    /* gradient */
+    background: linear-gradient(25deg, var(--rate-accent-color), var(--rate-accent-color2));
+    color: var(--rate-element-bg-color);
+    font-size: 16px;
     font-weight: bold;
     text-transform: capitalize;
     transition: inherit;
+    text-shadow: 0 0 5px var(--rate-text-color);
 
     &:hover{
-      background-color: var(--rate-hover-color);
+      background: var(--rate-hover-color);
     }
   }
 }
