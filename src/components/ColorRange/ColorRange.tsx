@@ -61,6 +61,8 @@ const ColorRange = () => {
       navigator.clipboard.writeText(JSON.stringify(colors, null, 2))
       .then(() => console.log("Colors copied to clipboard"))
       .catch((err) => console.error("Failed to copy colors:", err));
+      const button = e.currentTarget.querySelector("button");
+      if(button)button.textContent = "Copied!";
     };
 
   return (
@@ -83,7 +85,7 @@ const ColorRange = () => {
             <input type="password" placeholder="Password" />
           </label>
 
-          <button type="submit">Sing up</button>
+          <button type="submit">copy colors</button>
         </form>
       </div>
       <div
