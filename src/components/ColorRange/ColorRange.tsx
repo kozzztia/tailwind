@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { FormEvent, useCallback, useState } from 'react';
 import styles from './style.module.css';
 
 const ColorRange = () => {
@@ -41,12 +41,36 @@ const ColorRange = () => {
     setIsDragging(false);
     e.currentTarget.releasePointerCapture(e.pointerId);
   };
+
+  const getColor = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const accentColor = getComputedStyle(document.documentElement).getPropertyValue("--rate-accent-color").trim();
+    const accentColor2 = getComputedStyle(document.documentElement).getPropertyValue("--rate-accent-color2").trim();
+    const elementBgColor = getComputedStyle(document.documentElement).getPropertyValue("--rate-element-bg-color").trim();
+    const textColor = getComputedStyle(document.documentElement).getPropertyValue("--rate-text-color").trim();
+    const borderColor = getComputedStyle(document.documentElement).getPropertyValue("--rate-border-color").trim();
+    const hoverColor = getComputedStyle(document.documentElement).getPropertyValue("--rate-hover-color").trim();
+    const colors = {
+      accent: accentColor,
+      accent2: accentColor2,
+      bg: elementBgColor,
+      text: textColor,
+      border: borderColor,
+      hover: hoverColor,
+    };
+      navigator.clipboard.writeText(JSON.stringify(colors, null, 2))
+      .then(() => console.log("Colors copied to clipboard"))
+      .catch((err) => console.error("Failed to copy colors:", err));
+      const button = e.currentTarget.querySelector("button");
+      if(button)button.textContent = "Copied!";
+    };
+
   return (
     <div className={styles.rangeContainer}>
       <div className={styles.wiev}>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={(e)=>getColor(e)}>
           <h2>sign up</h2>
-          <p>Join us now! Sign up to kick-start<br/> your journey.</p>
+          <p>Join us now! Sign up to kick-start<br /> your journey.</p>
           <label>
             <span>Name</span>
             <input type="text" placeholder="Name" />
@@ -55,13 +79,13 @@ const ColorRange = () => {
             <span>Email</span>
             <input type="email" placeholder="Email" />
           </label>
-          
+
           <label>
             <span>Password</span>
             <input type="password" placeholder="Password" />
           </label>
 
-          <button type="submit">Sing up</button>
+          <button type="submit">copy colors</button>
         </form>
       </div>
       <div

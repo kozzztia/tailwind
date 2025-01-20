@@ -7,6 +7,7 @@
   --rate-text-color: hsl(var(--rate-color), 15%, 20%);
   --rate-border-color: hsl(var(--rate-color), 40%, 80%);
   --rate-hover-color: hsl(var(--rate-color), 85%, 45%);
+  
 
 
   --rate-background: #fff;
