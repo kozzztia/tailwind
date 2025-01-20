@@ -53,7 +53,7 @@ export const list: ListItem[] = [
         id: 9,
         name: 'Color range',
         component: lazy(() => import('../components/ColorRange/ColorRange')),
-        color: '#d9bd59'
+        color: 'var(--rate-accent-color)'
     }
 ].reverse();
 
