@@ -96,10 +96,7 @@
     padding: var(--rate-element-padding);
     height: auto;
     background-color: transparent;
-  }
-}
-
-form{
+    form{
   
   max-width: 250px;
   height: 100%;
@@ -191,3 +188,7 @@ form{
     }
   }
 }
+
+  }
+}
+
