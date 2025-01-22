@@ -82,7 +82,7 @@ const ColorRange = () => {
 
           <label>
             <span>Password</span>
-            <input type="password" placeholder="Password" />
+            <input type="password" placeholder="Password" autoComplete='off'/>
           </label>
 
           <button type="submit">copy colors</button>
