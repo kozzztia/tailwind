@@ -54,6 +54,12 @@ export const list: ListItem[] = [
         name: 'Color range',
         component: lazy(() => import('../components/ColorRange/ColorRange')),
         color: 'var(--rate-accent-color)'
+    },
+    {
+        id: 10,
+        name: 'Time',
+        component: lazy(() => import('../components/Timer/Timer')),
+        color: 'var(--timer-accent-color)'
     }
 ].reverse();
 
