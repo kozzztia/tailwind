@@ -36,6 +36,11 @@ const Timer = () => {
           )
         }
       </div>
+      <form className={styles.alert}> 
+          <input type="text" name="hour" max={24}/>
+          <input type="text" name="minute" max={60}/>
+          <button type="submit">Submit</button>
+      </form>
     </div>
   )
 }
