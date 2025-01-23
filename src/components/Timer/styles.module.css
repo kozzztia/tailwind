@@ -7,12 +7,13 @@
   --timer-border-color: hsl(var(--timer-color), 40%, 80%);
   --timer-hover-color: hsl(var(--timer-color), 85%, 45%);
 
-  --timer-width : 400px;
+  --timer-element-size: 160px;
+  --timer-size: 600px;
   --timer-padding : 20px;
   --number-size: 80px;
 
   @media screen and (max-width: 600px) {  
-    --timer-width : 100%;
+    --timer-element-size : 100px;
     --timer-padding : 10px;
     --number-size: 50px;
     
@@ -35,21 +36,26 @@
   font-weight: bold;
   font-size: 30px;
   .timer {
-    height: 100px;
-    min-width: var(--timer-width);
+    width :100%;
     position: relative;
-    z-index: 2;
-    background: rgba(255, 255, 255, 0.3); /* Полупрозрачный фон */
-    backdrop-filter: blur(10px); /* Размытие фона под элементом */
-    border-radius: 10px; /* Скруглённые края для эстетики */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Лёгкая тень */
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     color: var(--timer-hover-color); /* Цвет текста таймера */
+    gap: var(--timer-padding);
+    width: var(--timer-size);
     .timeElement{
+      width: var(--timer-element-size);
+      height: var(--timer-element-size);
       position: relative;
-      padding: calc(var(--timer-padding)*2);
+      padding: var(--timer-padding);
+      background: rgba(255, 255, 255, 0.3); /* Полупрозрачный фон */
+      backdrop-filter: blur(10px); /* Размытие фона под элементом */
+      border-radius: 10px; /* Скруглённые края для эстетики */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Лёгкая тень */
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .number{
           font-size: var(--number-size);
@@ -59,6 +65,19 @@
         position: absolute;
         display: none;
       }
+    }
+  }
+  .alert{
+    min-width : var(--timer-size);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--timer-hover-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    &>*{
+      display: none;
     }
   }
 }
