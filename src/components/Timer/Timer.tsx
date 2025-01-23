@@ -1,5 +1,7 @@
 import { useCallback, useLayoutEffect, useState } from "react";
 import styles from "./styles.module.css"
+import { FaMinus, FaPlus, FaClock } from "react-icons/fa6";
+
 
 const Timer = () => {
   const date = new Date();
@@ -36,11 +38,7 @@ const Timer = () => {
           )
         }
       </div>
-      <form className={styles.alert}> 
-          <input type="text" name="hour" max={24}/>
-          <input type="text" name="minute" max={60}/>
-          <button type="submit">Submit</button>
-      </form>
+      <Display />
     </div>
   )
 }
@@ -56,6 +54,62 @@ const TimeElement = ({ number, name }: { number: string, name: string }) => {
   )
 }
 
+const Display = () => {
+  const [hour, setHour] = useState<number>(0);
+  const [minute, setMinute] = useState<number>(0);
+
+  const hourOnclick: (value: number) => void = (value) => {
+    if (value === -1 && hour === 0) {
+      setHour(23);
+      return;
+    } else if (hour === 23 && value === 1) {
+      setHour(0);
+    } else {
+      setHour(prev => prev + value);
+    }
+  }
+
+  const minuteOnclick: (value: number) => void = (value) => {
+    if (value === -1 && minute === 0) {
+      setMinute(59);
+      return;
+    } else if (minute === 59 && value === 1) {
+      setMinute(0);
+    } else {
+      setMinute(prev => prev + value);
+    }
+  }
+
+  return (
+    <div className={styles.alert}>
+      <div className={styles.hour}>
+        <button onClick={() => hourOnclick(1)}>
+          <FaPlus />
+        </button>
+        <span>{hour.toString().padStart(2, "0")}</span>
+        <button onClick={() => hourOnclick(-1)}>
+          <FaMinus />
+        </button>
+      </div>
+      <div className={styles.minute}>
+        <button onClick={() => minuteOnclick(1)}>
+          <FaPlus />
+        </button>
+        <span>{minute.toString().padStart(2, "0")}</span>
+        <button onClick={() => minuteOnclick(-1)}>
+          <FaMinus />
+        </button>
+      </div>
+      <div className={styles.menu}>
+        <button>
+          <FaClock/>
+        </button>
+
+      </div>
+
+    </div>
+  )
+}
 
 
 interface Time {
