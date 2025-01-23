@@ -54,30 +54,65 @@
       border-radius: 10px; /* Скруглённые края для эстетики */
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Лёгкая тень */
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: s;
+      span{
+        transform: translate(-50%, -50%);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      }
 
       .number{
           font-size: var(--number-size);
           font-weight: bold;
+          text-align: center;
       }
       .name{
         position: absolute;
-        display: none;
+        top: 20px;
+        width :100%;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
       }
     }
   }
   .alert{
     min-width : var(--timer-size);
-    height: 50px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--timer-hover-color);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    &>*{
-      display: none;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .hour, .minute, .menu{
+      width: var(--timer-element-size);
+      height: var(--timer-element-size);
+      padding: var(--timer-padding);
+      background: rgba(255, 255, 255, 0.3); /* Полупрозрачный фон */
+      backdrop-filter: blur(10px); /* Размытие фона под элементом */
+      border-radius: 10px; /* Скруглённые края для эстетики */
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Лёгкая тень */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      button{
+        padding: 5px;
+        background: var(--timer-accent-color);
+        border: 1px solid var(--timer-border-color);
+        color: var(--timer-element-bg-color);
+        border-radius: 10px;
+        font-weight: bold;
+        white-space: nowrap;
+        outline: none;
+        transition: 0.3s;
+        cursor: pointer;
+        width :44px;
+        height: 44px;
+        &:hover{
+          background: var(--timer-hover-color);
+        }
+      }
     }
   }
 }
