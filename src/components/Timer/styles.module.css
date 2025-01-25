@@ -88,6 +88,7 @@
     flex-direction: row;
     justify-content: space-between;
     .hour, .minute, .menu{
+      user-select: none;
       width: var(--timer-element-size);
       height: var(--timer-element-size);
       padding: var(--timer-padding);

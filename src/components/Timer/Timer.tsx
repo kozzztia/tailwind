@@ -7,11 +7,16 @@ import { FaTrash } from "react-icons/fa";
 
 
 const Timer: FC = () => {
+  const [alert, setAlert] = useState<boolean>(false);
   return (
     <div className={styles.container}>
       <ViewTimer />
       <Display />
-      <Music />
+      <Music play={alert} />
+
+      <button className={styles.button} onClick={() => setAlert(!alert)}>
+        {alert ? <FaCircleMinus /> : <FaCirclePlus />}
+      </button>
     </div>
   )
 }
@@ -47,7 +52,7 @@ const ViewtimerElement: FC<{ number: string; name: string }> = ({ number, name }
 }
 
 const Display: FC = () => {
-  const [alertTime, setAlertTime] = useState<AlertTime>({ hour: 0, minute: 0 });
+  const [alertTime, setAlertTime] = useState<AlertTime | null>(null);
   const [edit, setEdit] = useState<boolean>(false);
   const arr = ["hour", "minute"];
 
@@ -62,22 +67,27 @@ const Display: FC = () => {
   }, []);
 
   const updateTime = (type: "hour" | "minute", value: number) => {
+    if (!alertTime) return;
     const max = type === "hour" ? 24 : 60;
-    setAlertTime((prev) => ({
-      ...prev,
-      [type]: calculateNewValue(Number(prev[type]), value, max),
-    }));
+    setAlertTime((prev) => {
+      if (!prev) return null; 
+      return {
+        ...prev,
+        [type]: calculateNewValue(Number(prev[type]), value, max),
+      };
+    });
   };
 
   const setTime = () => {
+    if (!alertTime) return;
     setLocalStorageTime(alertTime.hour, alertTime.minute);
     setEdit(true);
-  }
+  };
 
   const removeTime = () => {
     removeLocalStorageTime();
     resetTime();
-  }
+  };
 
   const resetTime = () => {
     setEdit(false);
@@ -86,34 +96,32 @@ const Display: FC = () => {
 
   return (
     <div className={styles.alert}>
-      {
-        arr.map((item, index) => (
-          <DisplayElement
-            key={index}
-            item={item as "hour" | "minute"}
-            alertTime={alertTime}
-            updateTime={updateTime}
-            edit={edit} />
-        ))
-      }
+      {arr.map((item, index) => (
+        <DisplayElement
+          key={index}
+          item={item as "hour" | "minute"}
+          alertTime={alertTime}
+          updateTime={updateTime}
+          edit={edit}
+        />
+      ))}
       <div className={styles.menu}>
-        {
-          edit ? (
-            <button onClick={removeTime}>
-              <FaTrash />
-            </button>
-          ) : (
-            <button onClick={setTime}>
-              <FaClock />
-            </button>
-          )
-        }
+        {edit ? (
+          <button onClick={removeTime}>
+            <FaTrash />
+          </button>
+        ) : (
+          <button onClick={setTime}>
+            <FaClock />
+          </button>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-const DisplayElement: FC<{ item: "hour" | "minute", edit: boolean, alertTime: AlertTime, updateTime: (type: "hour" | "minute", value: number) => void }> = ({ item, edit, alertTime, updateTime }) => {
+const DisplayElement: FC<{ item: "hour" | "minute", edit: boolean, alertTime: AlertTime | null, updateTime: (type: "hour" | "minute", value: number) => void }> = ({ item, edit, alertTime, updateTime }) => {
+  if(!alertTime) return null
   return (
     <div className={`${styles[item]} ${edit && styles.disabled}`}>
       <button
@@ -132,10 +140,16 @@ const DisplayElement: FC<{ item: "hour" | "minute", edit: boolean, alertTime: Al
 }
 
 
-const Music: FC = () => {
+const Music: FC< {play : boolean} > = ({play}) => {
   return (
     <div className={styles.music}>
-      music
+      {
+        play ? (
+            "yes"
+        ) : (
+            "no"
+        )
+      }
     </div>
   );
 };
