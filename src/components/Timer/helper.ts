@@ -42,3 +42,9 @@ export const removeLocalStorageTime = () => {
 export const padedNumber = (num: number) => {
     return num.toString().padStart(2, "0");
 }
+
+export const calculateNewValue = (current: number, value: number, max: number): number => {
+  if (current === 0 && value === -1) return max - 1;
+  if (current === max - 1 && value === 1) return 0;
+  return (current + value + max) % max;
+};
