@@ -2,7 +2,8 @@ import { FC, useLayoutEffect, useState } from "react";
 import styles from "./styles.module.css"
 import { FaClock, FaCirclePlus, FaCircleMinus } from "react-icons/fa6";
 // import { FaPause, FaPlay, FaTimes } from "react-icons/fa";
-import {getLocalStorageTime, getLocalTime } from "./helper";
+import {getLocalStorageTime, getLocalTime, padedNumber, removeLocalStorageTime, setLocalStorageTime } from "./helper";
+import { FaTrash } from "react-icons/fa";
 
 
 const Timer = () => {
@@ -32,7 +33,7 @@ const ViewTimer = () => {
   return (
     <div className={styles.viewTimer}>
       {arr.map((item, index) => (
-        <TimeElement key={index} number={Object.values(time)[index]} name={item} />
+        <TimeElement key={index} number={padedNumber(Object.values(time)[index])} name={item} />
       ))}
     </div>
   )
@@ -48,38 +49,49 @@ const TimeElement: FC<{number: string; name: string}> = ({ number, name}) => {
 }
 
 const Display = () => {
-  const [alertTime, setAlertTime] = useState<AlertTime>(getLocalStorageTime() || { hour: "00", minute: "00" });
+  const [alertTime, setAlertTime] = useState<AlertTime>({ hour: 0, minute: 0 });
+  const [edit, setEdit] = useState<boolean>(false);
+
+  useLayoutEffect(() => {
+    const alert = getLocalStorageTime();
+    if (alert) {
+      setEdit(true);
+      setAlertTime(alert);
+    }else{
+      resetTime();
+    }
+  }, []);
 
   const updateTime = (type: "hour" | "minute", value: number) => {
-    // Если alertTime отсутствует, задаем начальные значения
     const current = Number(alertTime[type]);
     const max = type === "hour" ? 24 : 60;
-  
-    // Обработка случаев перехода через границы
-    if (current === 0 && value === -1) {
-      setAlertTime({
-        ...alertTime,
-        [type]: (max - 1).toString().padStart(2, "0"),
-      });
-      return;
-    }
-  
-    if (current === max - 1 && value === 1) {
-      setAlertTime({
-        ...alertTime,
-        [type]: "00",
-      });
-      return;
-    }
-  
-    // Общий случай
-    const newValue = (current + value + max) % max;
-    setAlertTime({
-      ...alertTime,
-      [type]: newValue.toString().padStart(2, "0"),
-    });
+    const newValue =
+    current === 0 && value === -1
+      ? max - 1
+      : current === max - 1 && value === 1
+      ? 0
+      : (current + value + max) % max;
+
+    setAlertTime((prev) => ({
+      ...prev,
+      [type]: newValue,
+    }));
   };
-  
+
+  const setTime = () => {
+    setLocalStorageTime(alertTime.hour, alertTime.minute);
+    setEdit(true);
+  }
+
+  const removeTime = () => {
+    removeLocalStorageTime();
+    resetTime();
+  }
+
+  const resetTime = () => {
+    setEdit(false);
+    setAlertTime({ hour: 0, minute: 0 });
+  };
 
   return (
     <div className={styles.alert}>
@@ -87,7 +99,7 @@ const Display = () => {
         <button onClick={() => updateTime("hour", 1)}>
           <FaCirclePlus />
         </button>
-        <span>{alertTime.hour}</span>
+        <span>{padedNumber(alertTime.hour)}</span>
         <button onClick={() => updateTime("hour", -1)}>
           <FaCircleMinus />
         </button>
@@ -96,15 +108,23 @@ const Display = () => {
         <button onClick={() => updateTime("minute", 1)}>
           <FaCirclePlus />
         </button>
-        <span>{alertTime.minute}</span>
+        <span>{padedNumber(alertTime.minute)}</span>
         <button onClick={() => updateTime("minute", -1)}>
           <FaCircleMinus />
         </button>
       </div>
       <div className={styles.menu}>
-        <button >
-          <FaClock />
-        </button>
+        {
+          edit ? (
+            <button onClick={removeTime}>
+              <FaTrash/>
+            </button>
+          ) : (
+            <button onClick={setTime}>
+              <FaClock />
+            </button>
+          )
+        }
       </div>
     </div>
   )
@@ -123,12 +143,12 @@ const Music = () => {
 };
 
 interface Time {
-  hour: string;
-  minute: string;
-  second: string;
+  hour: number;
+  minute: number;
+  second: number;
 }
 
 interface AlertTime {
-  hour: string;
-  minute: string;
+  hour: number;
+  minute: number;
 }
