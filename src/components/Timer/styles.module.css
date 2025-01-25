@@ -13,6 +13,7 @@
   --number-size: 80px;
 
   @media screen and (max-width: 600px) {  
+    --timer-size: 100%;
     --timer-element-size : 100px;
     --timer-padding : 10px;
     --number-size: 50px;
@@ -35,13 +36,13 @@
   color: var(--timer-text-color);
   font-weight: bold;
   font-size: 30px;
-  .timer {
+  .viewTimer {
     width :100%;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--timer-hover-color); /* Цвет текста таймера */
+    color: var(--timer-hover-color); 
     gap: var(--timer-padding);
     width: var(--timer-size);
     .timeElement{
