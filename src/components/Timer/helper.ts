@@ -12,23 +12,31 @@ export const getLocalTime: () => { hour: number; minute: number; second: number;
 };
 
 export const getLocalStorageTime: () => { hour: number; minute: number } | null = () => {
-    const timer = localStorage.getItem("timer");
-    if (!timer) return null;
-  
-    try {
-      const alertTime = JSON.parse(timer);
-      if (typeof alertTime.hour === "number" && typeof alertTime.minute === "number") {
-        return {
-          hour: alertTime.hour,
-          minute: alertTime.minute,
-        };
-      }
-    } catch (error) {
-      console.error("Failed to parse timer from localStorage:", error);
+  const timer = localStorage.getItem("timer");
+  if (!timer) return null;
+
+  try {
+    // Проверяем, является ли строка валидным JSON
+    const alertTime = JSON.parse(timer);
+    
+    // Убедимся, что данные имеют ожидаемую структуру
+    if (
+      alertTime &&
+      typeof alertTime === "object" &&
+      typeof alertTime.hour === "number" &&
+      typeof alertTime.minute === "number"
+    ) {
+      return {
+        hour: alertTime.hour,
+        minute: alertTime.minute,
+      };
     }
-  
-    return null;
-  };
+  } catch (error) {
+    console.error("Failed to parse timer from localStorage:", error);
+  }
+
+  return null;
+};
 
 export const setLocalStorageTime = (hour: number, minute: number) => {
     const alertTime = { hour, minute};
@@ -48,3 +56,5 @@ export const calculateNewValue = (current: number, value: number, max: number): 
   if (current === max - 1 && value === 1) return 0;
   return (current + value + max) % max;
 };
+
+export const audioSrc = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";

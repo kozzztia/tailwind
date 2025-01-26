@@ -1,37 +1,41 @@
-import { FC, useLayoutEffect, useState } from "react";
+import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./styles.module.css"
 import { FaClock, FaCirclePlus, FaCircleMinus } from "react-icons/fa6";
-// import { FaPause, FaPlay, FaTimes } from "react-icons/fa";
-import { calculateNewValue, getLocalStorageTime, getLocalTime, padedNumber, removeLocalStorageTime, setLocalStorageTime } from "./helper";
-import { FaTrash } from "react-icons/fa";
+import { audioSrc, calculateNewValue, getLocalStorageTime, getLocalTime, padedNumber, removeLocalStorageTime, setLocalStorageTime, } from "./helper";
+import { FaMusic, FaPause, FaTrash } from "react-icons/fa";
 
 
 const Timer: FC = () => {
   const [alert, setAlert] = useState<boolean>(false);
+  console.log(alert)
   return (
     <div className={styles.container}>
-      <ViewTimer />
-      <Display />
-      <Music play={alert} />
-
-      <button className={styles.button} onClick={() => setAlert(!alert)}>
-        {alert ? <FaCircleMinus /> : <FaCirclePlus />}
-      </button>
+      <ViewTimer setAlert={setAlert} />
+      <Display setAlert={setAlert}/>
+      <Music isPlay={alert} />
     </div>
   )
 }
 
 export default Timer
 
-const ViewTimer: FC = () => {
+const ViewTimer: FC<{ setAlert: (value: boolean) => void}> = ({setAlert}) => {
   const [time, setTime] = useState<Time>(getLocalTime());
   const arr = ["hour", "minute", "second"];
+
+
   useLayoutEffect(() => {
     const interval = setInterval(() => {
       setTime(getLocalTime());
+      const storageTime = getLocalStorageTime();
+      if (storageTime) {
+        if (time.minute === storageTime?.minute && time.hour === storageTime?.hour) {
+          setAlert(true); 
+        }
+      }
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [setAlert, time.hour, time.minute]);
 
   return (
     <div className={styles.viewTimer}>
@@ -51,7 +55,7 @@ const ViewtimerElement: FC<{ number: string; name: string }> = ({ number, name }
   )
 }
 
-const Display: FC = () => {
+const Display: FC<{ setAlert: (value: boolean) => void}> = ({setAlert}) => {
   const [alertTime, setAlertTime] = useState<AlertTime | null>(null);
   const [edit, setEdit] = useState<boolean>(false);
   const arr = ["hour", "minute"];
@@ -87,6 +91,11 @@ const Display: FC = () => {
   const removeTime = () => {
     removeLocalStorageTime();
     resetTime();
+    disableAlert();
+  };
+
+  const disableAlert = () => {
+      setAlert(false);
   };
 
   const resetTime = () => {
@@ -140,19 +149,31 @@ const DisplayElement: FC<{ item: "hour" | "minute", edit: boolean, alertTime: Al
 }
 
 
-const Music: FC< {play : boolean} > = ({play}) => {
+const Music: React.FC<{ isPlay?: boolean}> = ({ isPlay }) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlay) {
+        audioRef.current.play().catch((err) => {
+          console.error("Failed to play audio:", err);
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlay]);
+
   return (
     <div className={styles.music}>
-      {
-        play ? (
-            "yes"
-        ) : (
-            "no"
-        )
-      }
+      <audio ref={audioRef} src={audioSrc} />
+      <button onClick={() => (audioRef.current ? audioRef.current.paused ? audioRef.current.play() : audioRef.current.pause() : null)}>
+        { isPlay ? <FaPause /> : <FaMusic />}
+      </button>
     </div>
   );
 };
+
 
 interface Time {
   hour: number;
