@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FC, memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "./styles.module.css"
 import { FaClock, FaCirclePlus, FaCircleMinus } from "react-icons/fa6";
 import { audioSrc, calculateNewValue, getLocalStorageTime, getLocalTime, padedNumber, removeLocalStorageTime, setLocalStorageTime, } from "./helper";
@@ -15,11 +15,11 @@ const Timer: FC = () => {
       <Music isPlay={alert} />
     </div>
   )
-}
+};
 
 export default Timer
 
-const ViewTimer: FC<{ setAlert: (value: boolean) => void}> = ({setAlert}) => {
+const ViewTimer : FC<{ setAlert: (value: boolean) => void}>  = memo(({setAlert}) => {
   const [time, setTime] = useState<Time>(getLocalTime());
   const arr = ["hour", "minute", "second"];
 
@@ -44,18 +44,18 @@ const ViewTimer: FC<{ setAlert: (value: boolean) => void}> = ({setAlert}) => {
       ))}
     </div>
   )
-}
+});
 
-const ViewtimerElement: FC<{ number: string; name: string }> = ({ number, name }) => {
+const ViewtimerElement: FC<{ number: string; name: string }> = memo(({ number, name }) => {
   return (
     <div className={styles.timeElement}>
       <span className={styles.number}>{number}</span>
       <span className={styles.name}>{name}</span>
     </div>
   )
-}
+});
 
-const Display: FC<{ setAlert: (value: boolean) => void}> = ({setAlert}) => {
+const Display: FC<{ setAlert: (value: boolean) => void}> = memo(({setAlert}) => {
   const [alertTime, setAlertTime] = useState<AlertTime | null>(null);
   const [edit, setEdit] = useState<boolean>(false);
   const arr = ["hour", "minute"];
@@ -127,9 +127,9 @@ const Display: FC<{ setAlert: (value: boolean) => void}> = ({setAlert}) => {
       </div>
     </div>
   );
-};
+});
 
-const DisplayElement: FC<{ item: "hour" | "minute", edit: boolean, alertTime: AlertTime | null, updateTime: (type: "hour" | "minute", value: number) => void }> = ({ item, edit, alertTime, updateTime }) => {
+const DisplayElement: FC<{ item: "hour" | "minute", edit: boolean, alertTime: AlertTime | null, updateTime: (type: "hour" | "minute", value: number) => void }> = memo(({ item, edit, alertTime, updateTime }) => {
   if(!alertTime) return null
   return (
     <div className={`${styles[item]} ${edit && styles.disabled}`}>
@@ -146,10 +146,10 @@ const DisplayElement: FC<{ item: "hour" | "minute", edit: boolean, alertTime: Al
       </button>
     </div>
   )
-}
+});
 
 
-const Music: React.FC<{ isPlay?: boolean}> = ({ isPlay }) => {
+const Music: React.FC<{ isPlay?: boolean}> = memo(({ isPlay }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -172,16 +172,16 @@ const Music: React.FC<{ isPlay?: boolean}> = ({ isPlay }) => {
       </button>
     </div>
   );
-};
+});
 
 
 interface Time {
   hour: number;
   minute: number;
   second: number;
-}
+};
 
 interface AlertTime {
   hour: number;
   minute: number;
-}
+};
