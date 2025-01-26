@@ -6,18 +6,19 @@
   --timer-text-color: hsl(var(--timer-color), 15%, 20%);
   --timer-border-color: hsl(var(--timer-color), 40%, 80%);
   --timer-hover-color: hsl(var(--timer-color), 85%, 45%);
+  --timer-buttom-size: 40px;
 
   --timer-element-size: 160px;
   --timer-size: 600px;
   --timer-padding : 20px;
   --number-size: 80px;
 
+
   @media screen and (max-width: 600px) {  
     --timer-size: 100%;
     --timer-element-size : 100px;
     --timer-padding : 10px;
-    --number-size: 50px;
-    
+    --number-size: 50px;   
   }
 }
 
@@ -41,7 +42,6 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    align-items: center;
     color: var(--timer-accent-color); 
     gap: var(--timer-padding);
     width: var(--timer-size);
@@ -55,7 +55,6 @@
       border-radius: 10px; /* Скруглённые края для эстетики */
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Лёгкая тень */
       display: flex;
-      justify-content: s;
       span{
         transform: translate(-50%, -50%);
         position: absolute;
@@ -101,6 +100,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
       button{
         padding: 5px;
         background: var(--timer-accent-color);
@@ -112,11 +112,26 @@
         outline: none;
         transition: 0.3s;
         cursor: pointer;
-        width :44px;
-        height: 44px;
+        width: var(--timer-button-size);
+        height: var(--timer-button-size);
         &:hover{
           background: var(--timer-hover-color);
         }
+        @media screen and (max-width: 600px) {
+          &:nth-child(1):not(:last-child){
+            position: absolute;
+            top :-20px;
+            right: 50%;
+            transform: translateX(50%);
+          }
+          &:nth-child(3){
+            position: absolute;
+            bottom :-20px;
+            right: 50%;
+            transform: translateX(50%);
+          }
+        }
+
       }
       span{
         color: var(--timer-text-color);
