@@ -1,3 +1,45 @@
-:root{
-    --smile-bg: red;
+:root {
+  --smile-bg: hsl(188, 75%, 85%);
+
+  --smile-person: hsl(67, 75%, 55%);
+  --smile-person2: hsl(67, 50%, 70%);
+
+  --mouth-color: hsl(0, 75%, 55%);
+  --mouth-color2: hsl(0, 50%, 70%);
+  --eyes-color: hsl(51, 1%, 90%);
+  --eyes-color2: hsl(51, 15%, 20%);
+
+  --smile-border-color: hsl(51, 90%, 5%);
+}
+
+.smile {
+  background-color: inherit;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: none;
+  .cursor {
+    position: absolute;
+    fill: var(--smile-border-color);
+    transform: translate(-50%, -50%);
+    
+  }
+
+  .person {
+    .face {
+      fill: var(--smile-person);
+      stroke: var(--smile-border-color);
+    }
+    .eye {
+      fill: var(--eyes-color);
+      stroke: var(--smile-border-color);
+    }
+    .mouth {
+      fill: transparent;
+      stroke: var(--mouth-color);
+      stroke-width: 6px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  }
 }
