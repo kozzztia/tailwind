@@ -60,7 +60,13 @@ export const list: ListItem[] = [
         name: 'Time',
         component: lazy(() => import('../components/Timer/Timer')),
         color: 'var(--timer-accent-color)'
-    }
+    },
+    {
+        id: 11,
+        name: 'Smile',
+        component: lazy(() => import('../components/Smile/Smile')),
+        color: 'var(--smile-bg)'
+    },
 ].reverse();
 
 
