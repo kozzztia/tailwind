@@ -15,13 +15,13 @@ const Smile = () => {
     const handleMouseLeave = () => {
         setMousePosition(prev => prev);
     };
-    console.log(activeProduct);
+
     return (
         <div className={styles.smile}
             onPointerDown={handleMouseMove}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}>
-            <Person mousePosition={mousePosition} />
+            <Person mousePosition={mousePosition} activeProduct={activeProduct}/>
 
             <Products setActiveProduct={setActiveProduct}/>
 
@@ -32,9 +32,7 @@ const Smile = () => {
 
 export default Smile;
 
-
-
-const Person = memo(({ mousePosition }: { mousePosition: { x: number; y: number } | null }) => {
+const Person = memo(({ mousePosition, activeProduct }: { mousePosition: { x: number; y: number } | null , activeProduct: string | null}) => {
     const eyeLeft = { x: 70, y: 80 };
     const eyeRight = { x: 130, y: 80 };
     const pupilRadius = 6;
@@ -77,10 +75,40 @@ const Person = memo(({ mousePosition }: { mousePosition: { x: number; y: number 
             <circle className={styles.pupil} cx={leftPupil.x} cy={leftPupil.y} r={pupilRadius} />
             <circle className={styles.pupil} cx={rightPupil.x} cy={rightPupil.y} r={pupilRadius} />
             {/* Рот */}
-            <path d="M 90 140 Q 100 160, 110 140 Q 100 120, 90 140" className={styles.mouth} />
+            {
+                getMouth(activeProduct) 
+            }
         </svg>
     );
 });
+
+const getMouth = (activeProduct: string | null) => {
+    if (activeProduct === null) {
+        return (
+            <path d="
+            M 130 140 
+            Q 120 160, 110 140 
+            Q 120 120, 130 140" className={styles.mouth} />
+        );
+    }
+    if(activeProduct === "poo") {
+        return (
+            <path 
+            d="
+            M 70 140 
+            Q 100 130, 130 140 
+            Q 100 120, 70 140" className={styles.mouth} />
+        );
+    }
+    if(activeProduct === "food") {
+        return (
+            <path d="
+            M 70 140 
+            Q 100 160, 130 140 
+            Q 100 150, 70 140" className={styles.mouth} />
+        );
+    }
+}
 
 
 const Cursor = memo(({ x, y }: { x?: number; y?: number }) => {
@@ -127,6 +155,8 @@ const Product = memo(({ element, type , setActiveProduct }: { element: IconType,
             datatype={type}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            onPointerDown={handleMouseEnter}
+            onPointerUp={handleMouseLeave}
         >
             {createElement(element, { className: styles.icon })}
         </div>
