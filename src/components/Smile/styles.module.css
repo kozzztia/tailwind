@@ -36,6 +36,10 @@
       fill: var(--eyes-color);
       stroke: var(--smile-border-color);
       filter: drop-shadow(0 0 5px var(--smile-border-color));
+      transition: all 0.2s;
+      *>path {
+        transition: all 0.2s;
+      }
     }
     .mouth {
       fill: transparent;
@@ -44,6 +48,7 @@
       stroke-linecap: round;
       stroke-linejoin: round;
       filter: drop-shadow(0 0 5px var(--smile-border-color));
+      transition: all 0.2s;
     }
   }
 
@@ -64,9 +69,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      .active{
-        transform: scale(1.2);
-      }
     }
 
   }

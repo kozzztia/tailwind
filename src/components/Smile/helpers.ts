@@ -32,6 +32,13 @@ export const products = [
         name: "4",
         type: "food",
         element: FaCandyCane,
+    },
+    {
+        id: 5,
+        name: "5",
+        type: "poo",
+        element: FaPoo,
     }
+
 
 ]
