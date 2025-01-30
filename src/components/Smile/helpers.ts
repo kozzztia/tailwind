@@ -1,4 +1,5 @@
-import { FaPoo, FaCandyCane } from "react-icons/fa";
+import { FaPoo, FaCandyCane, FaQuestion, FaBug } from "react-icons/fa";
+import { GiCakeSlice } from "react-icons/gi";
 
 export const getPosition = (e: React.MouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -9,18 +10,6 @@ export const getPosition = (e: React.MouseEvent<HTMLElement>) => {
 
 
 export const products = [
-    {
-        id: 1,
-        name: "1",
-        type: "poo",
-        element : FaPoo,
-    },
-    {
-        id: 2,
-        name: "2",
-        type: "food",
-        element: FaCandyCane,
-    },
     {
         id: 3,
         name: "3",
@@ -36,8 +25,20 @@ export const products = [
     {
         id: 5,
         name: "5",
-        type: "poo",
-        element: FaPoo,
+        type: "question",
+        element: FaQuestion,
+    },
+    {
+        id: 6,
+        name: "6",
+        type: "bug",
+        element: FaBug,
+    },
+    {
+        id: 7,
+        name: "7",
+        type: "cake",
+        element: GiCakeSlice,
     }
 
 

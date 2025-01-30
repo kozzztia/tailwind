@@ -4,8 +4,8 @@ import { getPosition, products } from "./helpers";
 import { IconType } from "react-icons";
 
 const Smile = () => {
-    const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 100, y: 100 });
-    const [activeProduct, setActiveProduct] = useState<string | null>(null);
+    const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 300, y: 300 });
+    const [activeProduct, setActiveProduct] = useState<string | null>('cake');
 
 
     const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -35,9 +35,9 @@ export default Smile;
 const Person = memo(({ mousePosition, activeProduct }: { mousePosition: { x: number; y: number } | null , activeProduct: string | null}) => {
     const eyeLeft = { x: 70, y: 80 };
     const eyeRight = { x: 130, y: 80 };
-    const pupilRadius = 6;
+    const pupilRadius = 10;
     const eyeRadius = 12;
-    const safeRadius = 5; // Мёртвая зона, в которой зрачок остаётся на месте
+    const safeRadius = 5; 
 
     const getPupilPosition = (eye: { x: number; y: number }) => {
         if (!mousePosition) {
@@ -76,39 +76,12 @@ const Person = memo(({ mousePosition, activeProduct }: { mousePosition: { x: num
             <circle className={styles.pupil} cx={rightPupil.x} cy={rightPupil.y} r={pupilRadius} />
             {/* Рот */}
             {
-                getMouth(activeProduct) 
+                getMouth(activeProduct, styles.mouth) 
             }
         </svg>
     );
 });
 
-const getMouth = (activeProduct: string | null) => {
-    if (activeProduct === null) {
-        return (
-            <path d="
-            M 130 140 
-            Q 120 160, 110 140 
-            Q 120 120, 130 140" className={styles.mouth} />
-        );
-    }
-    if(activeProduct === "poo") {
-        return (
-            <path 
-            d="
-            M 70 140 
-            Q 100 130, 130 140 
-            Q 100 120, 70 140" className={styles.mouth} />
-        );
-    }
-    if(activeProduct === "food") {
-        return (
-            <path d="
-            M 70 140 
-            Q 100 160, 130 140 
-            Q 100 150, 70 140" className={styles.mouth} />
-        );
-    }
-}
 
 
 const Cursor = memo(({ x, y }: { x?: number; y?: number }) => {
@@ -163,3 +136,64 @@ const Product = memo(({ element, type , setActiveProduct }: { element: IconType,
     );
 });
 
+
+
+const getMouth = (activeProduct: string | null, className?: string) => {
+    if (activeProduct === null) {
+        return (
+            <path d="
+            M 130 140 
+            Q 120 160, 110 140 
+            Q 120 120, 130 140" className={className} />
+        );
+    }
+    if(activeProduct === "poo") {
+        return (
+            <path 
+            d="
+            M 70 140 
+            Q 100 130, 130 140 
+            Q 100 120, 70 140" className={className} />
+        );
+    }
+    if(activeProduct === "food") {
+        return (
+            <path d="
+            M 70 140 
+            Q 100 160, 130 140 
+            Q 100 150, 70 140" className={className} />
+        );
+    }
+    if(activeProduct === "question") {
+        return (
+            <path d="
+            M 130 140 
+            Q 120 170, 110 140 
+            Q 120 110, 130 140" className={className} />
+        );
+    }
+    if(activeProduct === "bug") {
+        return (
+            <path d="
+            M 70 140 
+            Q 100 180, 130 140 
+            Q 100 100, 70 140" className={className} />
+        );
+    }
+    if(activeProduct === "cake") {
+        return (
+            <path d="
+            M 50 130 
+            Q 100 170, 150 130 
+            Q 100 160, 50 130" className={className} />
+        );
+    }
+    if(activeProduct === "menu") {
+        return (
+            <path d="
+            M 50 130 
+            Q 100 170, 150 130 
+            Q 100 160, 50 130" className={className} />
+        );
+    }
+}
