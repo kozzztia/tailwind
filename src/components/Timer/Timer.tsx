@@ -7,7 +7,6 @@ import { FaMusic, FaPause, FaTrash } from "react-icons/fa";
 
 const Timer: FC = () => {
   const [alert, setAlert] = useState<boolean>(false);
-  console.log(alert)
   return (
     <div className={styles.container}>
       <ViewTimer setAlert={setAlert} />
