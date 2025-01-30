@@ -1,26 +1,29 @@
 import { createElement, memo, useState } from "react";
 import styles from "./styles.module.css";
 import { getPosition, products } from "./helpers";
+import { IconType } from "react-icons";
 
 const Smile = () => {
-    const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>( { x: 100, y: 100 });
+    const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 100, y: 100 });
+    const [activeProduct, setActiveProduct] = useState<string | null>(null);
+
 
     const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-
-        const {x , y} = getPosition(e)
-        setMousePosition({ x, y });
+        setMousePosition(getPosition(e));
     };
 
     const handleMouseLeave = () => {
         setMousePosition(prev => prev);
     };
-
+    console.log(activeProduct);
     return (
-        <div className={styles.smile} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+        <div className={styles.smile}
+            onPointerDown={handleMouseMove}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}>
             <Person mousePosition={mousePosition} />
 
-
-            <Products />
+            <Products setActiveProduct={setActiveProduct}/>
 
             <Cursor x={mousePosition?.x} y={mousePosition?.y} />
         </div>
@@ -51,7 +54,7 @@ const Person = memo(({ mousePosition }: { mousePosition: { x: number; y: number 
             return { x: eye.x, y: eye.y };
         }
 
-        const maxDistance = Math.min(distance, eyeRadius); 
+        const maxDistance = Math.min(distance, eyeRadius);
         const angle = Math.atan2(dy, dx);
 
         return {
@@ -96,16 +99,37 @@ const Cursor = memo(({ x, y }: { x?: number; y?: number }) => {
     );
 });
 
-const Products = memo(() => {
+const Products = memo(({ setActiveProduct }: { setActiveProduct: React.Dispatch<React.SetStateAction<string | null>> }) => {
     return (
         <div className={styles.products}>
-            {
-                products.map(product => (
-                    <div key={product.id} className={styles.product}>
-                       {createElement(product.link, { className: styles.icon })}
-                    </div>
-                ))
-            }
+            {products.map(product => (
+                <Product key={product.id} element={product.element} type={product.type} setActiveProduct={setActiveProduct} />
+            ))}
         </div>
-    );    
+    );
 });
+
+
+const Product = memo(({ element, type , setActiveProduct }: { element: IconType, type: string, setActiveProduct: React.Dispatch<React.SetStateAction<string | null>> }) => {
+
+    const handleMouseEnter = () => {
+        setActiveProduct(type);
+
+    }
+
+    const handleMouseLeave = () => {
+        setActiveProduct(null);
+    }
+
+    return (
+        <div
+            className={styles.product}
+            datatype={type}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            {createElement(element, { className: styles.icon })}
+        </div>
+    );
+});
+

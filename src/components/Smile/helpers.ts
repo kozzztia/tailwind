@@ -7,30 +7,31 @@ export const getPosition = (e: React.MouseEvent<HTMLElement>) => {
     return { x, y };
 };
 
+
 export const products = [
     {
         id: 1,
         name: "1",
         type: "poo",
-        link : FaPoo,
+        element : FaPoo,
     },
     {
         id: 2,
         name: "2",
         type: "food",
-        link: FaCandyCane,
+        element: FaCandyCane,
     },
     {
         id: 3,
         name: "3",
         type : "poo",
-        link: FaPoo,
+        element: FaPoo,
     },
     {
         id: 4,
         name: "4",
         type: "food",
-        link: FaCandyCane,
+        element: FaCandyCane,
     }
 
 ]
