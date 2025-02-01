@@ -5,7 +5,7 @@ import { mockUsers } from "./helpers"; // Импортируем пользов�
 const ReactForm = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [pending, setPending] = useState<boolean>(false);
-    const [error, setError] = useState<{ login?: string; password?: string } | null>(null);
+    const [error, setError] = useState<{ login?: string; password?: string; message?: string } | null>(null);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -30,7 +30,7 @@ const ReactForm = () => {
         // Проверка логина и пароля
         const user = mockUsers.find(user => user.name === login && user.password === password);
         if (!user) {
-            setError({ login: "Invalid login or password" });
+            setError({ message: "Invalid login or password" });
             setPending(false);
             return;
         }
@@ -49,22 +49,36 @@ const ReactForm = () => {
     );
 };
 
-const LoginForm: React.FC<{ handler: (e: React.FormEvent<HTMLFormElement>) => void; pending: boolean; error: { login?: string; password?: string } | null }> = ({ pending, error, handler }) => {
+const LoginForm: React.FC<{ handler: (e: React.FormEvent<HTMLFormElement>) => void; pending: boolean; error: { login?: string; password?: string; message?: string } | null }> = ({ pending, error, handler }) => {
     return (
         <div className={styles.container}>
             <form onSubmit={handler} className={styles.form}>
                 <label>
                     <span className={error?.login ? styles.error : ""}>{error?.login || "Login"}</span>
-                    <input type="text" name="login" autoComplete="none"/>
+                    <Input name="login" type="text" />
                 </label>
                 <label>
                     <span className={error?.password ? styles.error : ""}>{error?.password || "Password"}</span>
-                    <input type="password" name="password" autoComplete="none"/>
+                    <Input name="password" type="password" />
                 </label>
-                <button type="submit" disabled={pending}>{pending ? "Pending..." : "Submit"}</button>
+                <button type="submit" disabled={pending} className={styles.button + (error?.message ? " " + styles.error : "")}>
+                    {pending ? "Pending..." : error?.message || "Submit"}</button>
             </form>
         </div>
     );
+};
+
+const Input: React.FC<{ name: string; type: string }> = ({ name, type }) => {
+    const [toched, setToched] = useState<boolean>(false);
+    return (
+    <input 
+        onBlur={() => setToched(true)} 
+        name={name} 
+        type={type} 
+        autoComplete="off"
+        className={toched ? styles.toched : ""}
+        />
+    )
 };
 
 export default ReactForm;
