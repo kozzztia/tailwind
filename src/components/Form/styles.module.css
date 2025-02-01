@@ -1,47 +1,83 @@
-:root{
-    --form-color: 250;
-    --form-accent-color: hsl(var(--form-color), 75%, 55%);
-    --form-accent-color2: hsl(var(--form-color), 50%, 70%);
-    --form-element-bg-color: hsl(var(--form-color), 20%, 90%);
-    --form-text-color: hsl(var(--form-color), 15%, 20%);
-    --form-border-color: hsl(var(--form-color), 40%, 80%);
-    --form-hover-color: hsl(var(--form-color), 85%, 45%);
+:root {
+  --form-color: 250;
+  --form-accent-color: hsl(var(--form-color), 75%, 55%);
+  --form-error-color: hsl(1, 75%, 55%);
+  --form-accent-color2: hsl(var(--form-color), 50%, 70%);
+  --form-element-bg-color: hsl(var(--form-color), 20%, 90%);
+  --form-text-color: hsl(var(--form-color), 15%, 20%);
+  --form-border-color: hsl(var(--form-color), 40%, 80%);
+  --form-hover-color: hsl(var(--form-color), 85%, 45%);
 }
 
-.container{
-    width :100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    background: inherit;
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: inherit;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--form-element-bg-color);
-    border-radius: 10px;
-    padding: 20px;
-    gap: 10px;
-    label{
-        position: relative;
-        width :100%;
-        span{
-            position: absolute;
-            top: 0px;
-            left: 10px;
-            transform: translateY(-50%);
-        }
-        input{
-            width: 100%;
-            padding :10px 20px;
-        }
-    };
-    .error{
-        color: red;
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--form-element-bg-color);
+  border-radius: 10px;
+  padding: 20px;
+  gap: 10px;
+  label {
+    position: relative;
+    width: 100%;
+    color: var(--form-text-color);
+    transition: all 0.2s ease-in-out;
+    span {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        font-weight: bold;
+        transition: inherit;
+        color: var(--form-accent-color);
+      }
+    input {
+      width: 100%;
+      padding: 10px 20px;
+      outline: none;
+      border-radius: 5px;
+      border: 1px solid var(--form-border-color);
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      transition: inherit;
     }
+    &:has(input:focus) {
+      input {
+        border-color: var(--form-accent-color2);
+      }
+      span {
+        top: 0;
+      }
+    }
+    &:has(input:hover) {
+      input {
+        border-color: var(--form-accent-color2);
+      }
+    }
+    &:has(input:invalid) {
+      input {
+        border-color: var(--form-error-color);
+      }
+    }
+    &:has(.toched) {
+        span{
+          top: 0;
+        }
+    }
+  }
+  .error {
+    color: var(--form-error-color);
+    font-weight: bold;
+  }
 }
