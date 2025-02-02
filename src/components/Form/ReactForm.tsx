@@ -55,11 +55,11 @@ const LoginForm: React.FC<{ handler: (e: React.FormEvent<HTMLFormElement>) => vo
             <form onSubmit={handler} className={styles.form}>
                 <label>
                     <span className={error?.login ? styles.error : ""}>{error?.login || "Login"}</span>
-                    <Input name="login" type="text" />
+                    <Input name="login" type="text" value="John"/>
                 </label>
                 <label>
                     <span className={error?.password ? styles.error : ""}>{error?.password || "Password"}</span>
-                    <Input name="password" type="password" />
+                    <Input name="password" type="password" value="123456"/>
                 </label>
                 <button type="submit" disabled={pending} className={styles.button + (error?.message ? " " + styles.error : "")}>
                     {pending ? "Pending..." : error?.message || "Submit"}</button>
@@ -68,11 +68,12 @@ const LoginForm: React.FC<{ handler: (e: React.FormEvent<HTMLFormElement>) => vo
     );
 };
 
-const Input: React.FC<{ name: string; type: string }> = ({ name, type }) => {
+const Input: React.FC<{ name: string; type: string; value?: string }> = ({ name, type,value }) => {
     const [toched, setToched] = useState<boolean>(false);
     return (
     <input 
         onBlur={() => setToched(true)} 
+        value={value}
         name={name} 
         type={type} 
         autoComplete="off"
