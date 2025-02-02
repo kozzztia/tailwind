@@ -67,12 +67,12 @@ export const list: ListItem[] = [
         component: lazy(() => import('../components/Smile/Smile')),
         color: 'var(--smile-bg)'
     },
-    {
-        id: 12,
-        name: 'Form',
-        component: lazy(() => import('../components/Form/ReactForm')),
-        color: 'var(--form-accent-color)'
-    }
+    // {
+    //     id: 12,
+    //     name: 'Form',
+    //     component: lazy(() => import('../components/Form/ReactForm')),
+    //     color: 'var(--form-accent-color)'
+    // }
 ].reverse();
 
 
