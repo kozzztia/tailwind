@@ -76,6 +76,10 @@
         }
     }
   }
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
   .error {
     color: var(--form-error-color);
     font-weight: bold;
